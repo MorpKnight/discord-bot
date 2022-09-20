@@ -23,7 +23,7 @@ class discord_radio(commands.Cog):
             self.voice_client.play(FFmpegPCMAudio(source))
             await ctx.send("playing radio")
 
-    @commands.hybrid_command(name='radio', description='Play music from e-radio')
+    @commands.hybrid_group(name='radio', description='Play music from e-radio')
     async def radio_music(self, ctx:commands.Context):
         if ctx.invoked_subcommand:
             await ctx.send(f"{ctx.prefix}help radio")

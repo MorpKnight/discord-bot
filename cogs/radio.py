@@ -36,7 +36,7 @@ class discord_radio(commands.Cog):
         source = "https://14033.live.streamtheworld.com/SYMPHONY924AAC.aac?dist=radiosingapore"
         await self.radio_player(ctx, source)
 
-    @radio_music.command(name='Japanimradio_Osaka', description='Play radio from Japanimradio - Osaka')
+    @radio_music.command(name='japanimradio_osaka', description='Play radio from Japanimradio - Osaka')
     async def radio_osaka(self, ctx:commands.Context):
         source = "https://ais-edge51-live365-dal02.cdnstream.com/a51684"
         await self.radio_player(ctx, source)

@@ -2,8 +2,6 @@ import discord
 from discord.ext import commands
 from discord import FFmpegPCMAudio
 
-
-
 class discord_radio(commands.Cog):
     def __init__(self, client:discord.Client):
         self.client = client

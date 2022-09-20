@@ -4,7 +4,7 @@ import subprocess
 from asyncio import sleep
 from concurrent.futures import ThreadPoolExecutor
 
-from utils.moderation_button import kick_button, ban_button
+from utility.moderation_button import kick_button, ban_button
 import discord
 from discord import app_commands
 from discord.app_commands import Choice

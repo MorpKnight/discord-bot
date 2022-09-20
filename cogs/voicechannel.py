@@ -2,7 +2,7 @@ import time
 import discord
 from discord.ext import commands, tasks
 from discord import FFmpegPCMAudio
-from tools.musicplayer import music_player, queue_button
+from utility.musicplayer import music_player, queue_button
 from random import shuffle
 
 class voicechannel(commands.Cog):

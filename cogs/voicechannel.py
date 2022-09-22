@@ -19,7 +19,7 @@ class voicechannel(commands.Cog):
         self.player = music_player()
         self.auto_disconnect.start()
     
-    @commands.command(name='join', aliases=['j'], description='Join voice channel')
+    @commands.hybrid_command(name='join', aliases=['j'], description='Join voice channel')
     async def join_voice(self, ctx:commands.Context):
         vc = ctx.author.voice
         if vc and vc.channel:
@@ -36,7 +36,7 @@ class voicechannel(commands.Cog):
         else:
             await ctx.send("You're not in voice channel")
     
-    @commands.command(name='play', aliases=['p'], description='Play song on this bot')
+    @commands.hybrid_command(name='play', aliases=['p'], description='Play song on this bot')
     async def play_music(self, ctx:commands.Context, *, title:str=None):
         FFMPEG_OPTIONS = {
             'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'

@@ -2,7 +2,7 @@ import discord
 import time
 from discord.ext import commands, tasks
 from discord import FFmpegPCMAudio
-from utility.musicplayer import musicPlayer, queuebutton
+from cogs.utility.musicplayer import musicPlayer, queuebutton
 from random import shuffle
 from discord.ui import View
 

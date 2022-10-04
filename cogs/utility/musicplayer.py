@@ -4,18 +4,77 @@ import discord
 import requests
 import spotipy
 from discord import ButtonStyle, FFmpegPCMAudio
-from discord.ext import commands
-from discord.ui import View
+from discord.ui import Button, View, button
 from spotipy.oauth2 import SpotifyClientCredentials
 from youtube_dl import YoutubeDL
+from dotenv import load_dotenv
+from os import getenv
 
-publicKey = 'ede84f6ac3964f8b84af9add65b5ea42'
-secretKey = '31813713900f428dbe74ba438adaf19b'
+load_dotenv()
+publicKey = getenv("PUBLICKEY")
+secretKey = getenv("SECRETKEy")
 clientManager = SpotifyClientCredentials(client_id=publicKey, client_secret=secretKey)
 spotify = spotipy.Spotify(client_credentials_manager=clientManager)
 
-class music_player():
-    async def search_song(self, keyword):
+class musicPlayer():
+    async def gettime(self):
+        selfSpot = iter(self.spot)
+        n = 1
+        while self.voice_client.is_playing() == True:
+            self.time += 1
+            await asyncio.sleep(1)
+            try:
+                video = musicPlayer.search(query=selfSpot.__next__())
+                self.query.append(video)
+                n += 1
+                if n == len(self.spot):
+                    print("Done download all")
+            except StopIteration:
+                pass
+        self.spot.clear()
+    
+    async def nextqueue(self, ctx):
+        FFMPEG_OPTIONS = {
+            'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+        }
+        while self.query != []:
+            if self.voice_client != None:
+                if self.loop == False:
+                    if self.voice_client.is_playing() == False:
+                        if self.voice_client.is_paused() == False:
+                            try:
+                                self.query.pop(0)
+                            except:
+                                pass
+                            if self.query != []:
+                                self.time = 0
+                                video = self.query[0]
+                                self.np = video['title']
+                                source = video['formats'][0]['url']
+                                self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
+                                embed = discord.Embed(
+                                    title="Now playing", 
+                                    description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}", 
+                                    color=discord.Color.random())
+                                embed.set_thumbnail(url=video['thumbnail'])
+                                await ctx.send(embed=embed)
+                                await musicPlayer.gettime(self)
+                if self.loop == True:
+                    if self.voice_client.is_playing() == False:
+                        if self.voice_client.is_paused() == False:
+                            self.time = 0
+                            video = self.query[0]
+                            source = video['formats'][0]['url']
+                            self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
+                            embed = discord.Embed(
+                                title="Now playing",
+                                description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}",
+                                color=discord.Color.random())
+                            await ctx.send(embed=embed)
+                            await musicPlayer.gettime(self)
+            await asyncio.sleep(1)
+    
+    def search(query):
         OPTION = {
             'format': 'bestaudio',
             'no_warnings': True,
@@ -29,91 +88,31 @@ class music_player():
         }
         with YoutubeDL(OPTION) as ydl:
             try:
-                requests.get(keyword)
+                requests.get(query)
             except:
-                info = ydl.extract_info(f"ytsearch:{keyword}", download=False)['entries'][0]
+                info = ydl.extract_info(f"ytsearch:{query}", download=False)['entries'][0]
             else:
-                info = ydl.extract_info(keyword, download=False)
+                info = ydl.extract_info(query, download=False)
         return info
-
-    async def get_time(self):
-        spotify_playlist = iter(self.spot)
-        n = 1
-        while self.voice_client.is_playing() == True:
-            self.time += 1
-            await asyncio.sleep(1)
-            try:
-                video = self.search_song(keyword=spotify_playlist.__next__())
-                self.queue.append(video)
-                n += 1
-                if n == len(self.spotify_queue):
-                    print("Done")
-            except StopIteration:
-                pass
-        self.spot.clear()
     
-    async def next_queue(self, ctx:commands.Context):
-        FFMPEG_OPTIONS = {
-            'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
-        }
-        while self.queue != []:
-            if self.voice_client != None:
-                if self.loop == False:
-                    if self.voice_client.is_playing() == False:
-                        if self.voice_client.is_paused() == False:
-                            try:
-                                self.queue.pop(0)
-                            except:
-                                pass
-                            if self.queue != []:
-                                self.time = 0
-                                video = self.queue[0]
-                                self.now_playing = video['title']
-                                source = video['formats'][0]['url']
-                                self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
-                                embed = discord.Embed(
-                                    title = "Now Playing",
-                                    description = f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}",
-                                    color = discord.Colour.random()
-                                )
-                                embed.set_thumbnail(url=video['thumbnail'])
-                                await ctx.send(embed=embed)
-                                await self.get_time()
-                if self.loop == True:
-                    if self.voice_client.is_playing() == False:
-                        if self.voice_client.is_paused() == False:
-                            self.time = 0
-                            video = self.queue[0]
-                            source = video['formats'][0]['url']
-                            self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
-                            embed = discord.Embed(
-                                title = "Now Playing",
-                                description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}",
-                                color = discord.Colour.random()
-                            )
-                            await ctx.send(embed=embed)
-                            await self.get_time()
-            await asyncio.sleep(1)
-
-    async def get_spotify(self, link):
-        if "playlisy" in link:
+    async def spotify(self, link):
+        if "playlist" in link:
             for track in spotify.playlist_tracks(link)["items"]:
                 track_name = track["track"]["name"]
                 track_artist = track["track"]["artists"][0]["name"]
                 track_info = f"{track_name} by {track_artist}"
-                self.spotify_queue.append(track_info)
+                self.spot.append(track_info)
         elif "album" in link:
             for track in spotify.album_tracks(link)["items"]:
                 track_name = track["name"]
                 track_artist = track["artists"][0]["name"]
                 track_info = f"{track_name} by {track_artist}"
-                self.spotify_queue.append(track_info)
+                self.spot.append(track_info)
         elif "artis" in link:
             result = spotify.artist_top_tracks(link)
             for track in result['tracks'][:10]:
-                self.spotify_queue.append(track['name'])
-
-class queue_button(View):
+                self.spot.appen(track['name'])
+class queuebutton(View):
     def __init__(self, paginatedQueue):
         super().__init__(timeout = None)
         self.paginated = paginatedQueue

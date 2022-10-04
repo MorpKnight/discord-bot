@@ -12,7 +12,7 @@ from os import getenv
 
 load_dotenv()
 publicKey = getenv("PUBLICKEY")
-secretKey = getenv("SECRETKEy")
+secretKey = getenv("SECRETKEY")
 clientManager = SpotifyClientCredentials(client_id=publicKey, client_secret=secretKey)
 spotify = spotipy.Spotify(client_credentials_manager=clientManager)
 

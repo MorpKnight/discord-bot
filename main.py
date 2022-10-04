@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from os import getenv, listdir
+from cogs.utility.tekkomp_roles import game_roles, residence
+from cogs.utility.mainserver_roles import rolebutton
+from cogs.utility.ftui_roles import games, departemen, prodi, animeenjoyer
 
 load_dotenv()
 TOKEN = getenv('TOKEN')
@@ -24,6 +27,9 @@ class Client(commands.Bot):
                 name = filename[:-3]
                 await client.load_extension(f"cogs.{name}")
         self.loop.create_task(self.startup())
+        self.add_view(view=game_roles() ,message_id=1001619122838315139)
+        self.add_view(view=residence(), message_id=1014667795239276605)
+        self.add_view(view=rolebutton(), message_id=1001100602748715018)
 
 client = Client()
 client.run(TOKEN)

@@ -51,7 +51,7 @@ class discord_radio(commands.Cog):
         source = "https://audio.misproductions.com/japan128k"
         await self.radio_player(ctx, source)
     
-    @radio_music.command(name="PowerPlay_Kawaii", description="Play J-Pop Powerplay Kawaii")
+    @radio_music.command(name="powerplay_awaii", description="Play J-Pop Powerplay Kawaii")
     async def radio_jpop_kawaii(self, ctx:commands.Context):
         source = "https://kathy.torontocast.com:3060/;"
         await self.radio_player(ctx, source)

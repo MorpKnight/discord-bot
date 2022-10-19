@@ -41,7 +41,7 @@ class discord_radio(commands.Cog):
         source = "https://ais-edge51-live365-dal02.cdnstream.com/a51684"
         await self.radio_player(ctx, source)
     
-    @radio_music.command(name='nkh', description='Plays NHK radio')
+    @radio_music.command(name='nhk', description='Plays NHK radio')
     async def radio_nhk(self, ctx:commands.Context):
         source = "https://kathy.torontocast.com:3560/"
         await self.radio_player(ctx, source)
@@ -49,6 +49,11 @@ class discord_radio(commands.Cog):
     @radio_music.command(name='japan_a_radio', description='Plays Japan a Radio radio')
     async def radio_japan_a(self, ctx:commands.Context):
         source = "https://audio.misproductions.com/japan128k"
+        await self.radio_player(ctx, source)
+    
+    @radio_music.command(name="PowerPlay_Kawaii", description="Play J-Pop Powerplay Kawaii")
+    async def radio_jpop_kawaii(self, ctx:commands.Context):
+        source = "https://kathy.torontocast.com:3060/;"
         await self.radio_player(ctx, source)
 
 async def setup(client):

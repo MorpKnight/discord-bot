@@ -1,4 +1,8 @@
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
+import functools
 from multiprocessing.connection import Client
+import subprocess
 import discord
 from discord.ext import commands, tasks
 from asyncio import sleep
@@ -10,6 +14,40 @@ from discord_together import DiscordTogether
 class command(commands.Cog):
     def __init__(self, client:discord.Client):
         self.client = client
+    
+    def run_cmd(cmd):
+        print(f"Init run cmd: `{cmd}`")
+        try:
+            cmd_list = cmd.split(" ")
+            run = subprocess.run(cmd_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            run_err = run.stderr.decode('utf-8')
+            if run_err != "":
+                return False, run_err
+            return True, run.stdout.decode('utf-8')
+        except Exception as err:
+            return False, str(err)
+
+    def split_to_list(text: str, max_len: int = 1000):
+        spllited_text = []
+        if len(text) >= max_len:
+            remain_text = text
+            while True:
+                split_by_new_line = remain_text.split("\n")
+                app_text = ""
+                for new_line_text in split_by_new_line:
+                    new_line_text = new_line_text + "\n"
+                    if len(app_text) + len(new_line_text) >= max_len:
+                        break
+                    app_text += new_line_text
+
+                spllited_text.append(app_text)
+                remain_text = remain_text[len(app_text):]
+
+                if remain_text == "":
+                    break
+        else:
+            spllited_text = [text]
+        return spllited_text
     
     @commands.hybrid_command(name='ping', description="Check bot's latency to server")
     async def _ping(self, ctx:commands.Context):
@@ -72,5 +110,17 @@ class command(commands.Cog):
         await anonymous_channel.send(embed=embed)
         await anonymous_log.send(f"`{message}` ~ {ctx.author}")
     
+    @commands.command(name='cmd')
+    async def _cmd(self, ctx, *, cmd):
+        if not cmd:
+            await ctx.send("Empty command")
+        cmd = "".join(cmd[:])
+        await ctx.send(f"Running `{cmd}`")
+        loop = asyncio.get_event_loop()
+        _, r_cmd = await loop.run_in_executor(ThreadPoolExecutor(), functools.partial(command.run_cmd, cmd))
+        s_r_cmd = command.split_to_list(r_cmd, 1990)
+        for m in s_r_cmd:
+            await ctx.send(f"```{m}```")
+
 async def setup(client):
     await client.add_cog(command(client))

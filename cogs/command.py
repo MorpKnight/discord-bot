@@ -111,6 +111,7 @@ class command(commands.Cog):
         await anonymous_log.send(f"`{message}` ~ {ctx.author}")
     
     @commands.command(name='cmd')
+    @commands.is_owner()
     async def _cmd(self, ctx, *, cmd):
         if not cmd:
             await ctx.send("Empty command")

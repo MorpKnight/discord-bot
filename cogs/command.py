@@ -62,5 +62,15 @@ class command(commands.Cog):
         result = random.randint(1, 440000)
         await ctx.reply(f'https://nhentai.net/g/{result}')
     
+    @commands.hybrid_command(name='anonym', description="Send message anonymously to #anonym")
+    @commands.dm_only()
+    async def anonymous(self, ctx:commands.Context, *, message:str):
+        anonymous_channel = self.client.get_channel(1011113637496242279)
+        anonymous_log = self.client.get_channel(1011982504904900609)
+        embed = discord.Embed(description=f"`{message}`")
+        await ctx.send("Pesan terkirim", ephemeral=True)
+        await anonymous_channel.send(embed=embed)
+        await anonymous_log.send(f"`{message}` ~ {ctx.author}")
+    
 async def setup(client):
     await client.add_cog(command(client))

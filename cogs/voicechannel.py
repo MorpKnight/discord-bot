@@ -259,6 +259,15 @@ class voice(commands.Cog):
 
         await ctx.send(embed=embed, view=queuebutton(paginatedQueue))
     
+    @commands.hybrid_command(name="nowplaying", aliases=['np'], description="Shows what song is playing")
+    async def now_playing(self, ctx:commands.Context):
+        embed = discord.Embed(
+            title="Now Playing",
+            description=self.np,
+            color=discord.Colour.random()
+        )
+        await ctx.reply(embed=embed)
+    
     @tasks.loop(minutes=5)
     async def autodisconnect(self):
         for guild in self.client.guilds:

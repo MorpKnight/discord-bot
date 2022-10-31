@@ -51,6 +51,7 @@ class moderation(commands.Cog):
         self.cmd = command_prompt_class()
 
     @app_commands.command(name='move', description="Move member to another voice channel")
+    @app_commands.default_permissions(move_member=True)
     async def move_member(self, interaction:discord.Interaction, member:discord.Member, channel:discord.VoiceChannel):
         await member.move_to(channel)
         await interaction.response.send_message(f"{member.mention} has been moved to {channel.mention}", ephemeral=True)

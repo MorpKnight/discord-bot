@@ -21,6 +21,8 @@ class handler(commands.Cog):
             await ctx.reply("You don't have permission to use this command")
         elif isinstance(error, commands.CommandInvokeError):
             await ctx.reply("Command on invoke error")
+        elif isinstance(error, commands.MissingPermissions):
+            await ctx.reply("You had no perms to run this command")
 
 async def setup(client):
     await client.add_cog(handler(client))

@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from cogs.utility.moderation_button import kick_button, ban_button
 import discord
 from discord import app_commands
-from discord.app_commands import Choice
+from discord.app_commands import Choice, checks
 from discord.ext import commands
 
 class command_prompt_class():
@@ -57,6 +57,7 @@ class moderation(commands.Cog):
         await interaction.response.send_message(f"{member.mention} has been moved to {channel.mention}", ephemeral=True)
     
     @app_commands.command(name='purge', description="Delete a number of messages from a channel")
+    @app_commands.checks.has_permissions(manage_messages=True)
     async def purge_message(self, interaction:discord.Interaction, number:int):
         await interaction.channel.purge(limit=number)
         await interaction.response.send_message(f"{number} messages have been purged", ephemeral=True)

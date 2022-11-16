@@ -61,9 +61,16 @@ class kost(View):
         await interaction.response.send_message(f"You have been assigned the role {role.name}", ephemeral=True)
     
     @button(
-        label = "Kost",
+        label = "Ya",
         style = discord.ButtonStyle.blurple,
         custom_id= 'Kost'
     )
     async def kost(self, interaction, button):
         await self.giveRole(interaction, button.custom_id)
+    
+    @button(
+        label = "Ga",
+        style = discord.ButtonStyle.blurple
+    )
+    async def gakost(self, interaction:discord.Interaction, button):
+        await interaction.response.send_message("Kontol", ephemeral=True)

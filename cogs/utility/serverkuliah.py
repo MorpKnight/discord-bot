@@ -20,9 +20,9 @@ class games(View):
         await self.giveRole(interaction, button.custom_id)
     
     @button(
-        label = "Valorant",
+        label = "VALORANT",
         style = discord.ButtonStyle.blurple,
-        custom_id= 'Valorant'
+        custom_id= 'VALORANT'
     )
     async def valorant(self, interaction, button):
         await self.giveRole(interaction, button.custom_id)

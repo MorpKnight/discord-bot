@@ -3,7 +3,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from os import getenv, listdir
 from cogs.utility.tekkomp_roles import game_roles, residence
-from cogs.utility.mainserver_roles import rolebutton
+from cogs.utility.serversma import rolebutton
 from cogs.utility.ftui_roles import games, departemen, prodi, animeenjoyer
 
 load_dotenv()

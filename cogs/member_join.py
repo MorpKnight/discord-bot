@@ -96,6 +96,16 @@ Terima kasih atas kunjunganmu!"""
 
         elif member.guild.id == 964708141788962866:
             pass
+        elif member.guild.id == 1042049711336591451:
+            mainchat = self.client.get_channel(1042049711852507218)
+            memberrole = get(member.guild.roles, name='Member')
+
+            embed = discord.Embed(
+                title="地獄へようこそ!",
+                description=f"Welcome here {member.mention}\nTunjukan jati dirimu sesungguhnya disini!",
+                color = discord.Colour.random()
+            )
+            
 
 async def setup(client):
     await client.add_cog(memberjoin(client))

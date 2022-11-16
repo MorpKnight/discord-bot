@@ -70,7 +70,8 @@ class kost(View):
     
     @button(
         label = "Ga",
-        style = discord.ButtonStyle.blurple
+        style = discord.ButtonStyle.blurple,
+        custom_id = 'GaKost'
     )
     async def gakost(self, interaction:discord.Interaction, button):
         await interaction.response.send_message("Kontol", ephemeral=True)

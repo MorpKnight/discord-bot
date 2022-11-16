@@ -102,10 +102,13 @@ Terima kasih atas kunjunganmu!"""
 
             embed = discord.Embed(
                 title="地獄へようこそ!",
-                description=f"Welcome here {member.mention}\nTunjukan jati dirimu sesungguhnya disini!",
+                description=f"Welcome here {member.mention}\nTunjukan jati dirimu sesungguhnya disini!\nHarap baca Rules & Guide di [sini](https://discord.com/channels/1042049711336591451/1042226755307569163/1042249203545542656)",
                 color = discord.Colour.random()
             )
-            
+            embed.set_thumbnail(url=member.avatar.url)
+            await member.add_roles(memberrole)
+            await mainchat.send(embed=embed)
+
 
 async def setup(client):
     await client.add_cog(memberjoin(client))

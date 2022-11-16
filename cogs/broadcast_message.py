@@ -119,22 +119,6 @@ class broadcast(commands.Cog):
             embed.set_image(url=image)
         await getEmbed.edit(embed=embed)
         await ctx.send("Done", ephemeral=True)
-    
-    @commands.hybrid_command(name='newrules')
-    async def new_rules(self, ctx:commands.Context):
-        ch = self.client.get_channel(1042226755307569163)
-        embed = discord.Embed(
-            title="Welcome Fellas!",
-            description="Welcome here @everyone, don't hestitate everything in here",
-            color=discord.Colour.random()
-        )
-        embed.add_field(
-            name="Rules & Guide",
-            value="""1. We do dirty talk
-2. We share porn
-3. CPMK"""
-        )
-        await ch.send(embed=embed)
 
 async def setup(client):
     await client.add_cog(broadcast(client))

@@ -1,4 +1,4 @@
-discord.py @ git+https://github.com/Rapptz/discord.py.git@a592361f29ba31f08f43fa60ed3685905e5da329
+discord.py==2.1.0
 python-dotenv==0.20.0
 PyNaCl==1.5.0
 youtube-dl==2021.12.17

@@ -120,15 +120,6 @@ class broadcast(commands.Cog):
             embed.set_image(url=image)
         await getEmbed.edit(embed=embed)
         await ctx.send("Done", ephemeral=True)
-    
-    @commands.hybrid_command(name="komik", description="komik cuy")
-    async def ini_komik(self, ctx:commands.Context):
-        embed = discord.Embed(
-            title = "Pick your side!",
-            description = "Pilihlah pihak mana kalian berada wahai anak anak Ku!",
-            color = discord.Colour.random()
-        )
-        await ctx.send(embed=embed, view=comic());
 
 async def setup(client):
     await client.add_cog(broadcast(client))

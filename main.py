@@ -31,9 +31,9 @@ class Client(commands.Bot):
         self.add_view(view=game_roles() ,message_id=1001619122838315139)
         self.add_view(view=residence(), message_id=1014667795239276605)
         self.add_view(view=rolebutton(), message_id=1001100602748715018)
-        self.add_view(view=games(), message_id=1042285437693198437)
-        self.add_view(view=kost(), message_id=1042286247990804532)
-        self.add_view(view=comic(), message_id=1047099101000515614)
+        self.add_view(view=games(), message_id=1047116059632742433)
+        self.add_view(view=kost(), message_id=1047116061759254630)
+        self.add_view(view=comic(), message_id=1047116063554404352)
 
 
 client = Client()

@@ -5,7 +5,7 @@ from os import getenv, listdir
 from cogs.utility.tekkomp_roles import game_roles, residence
 from cogs.utility.serversma import rolebutton
 from cogs.utility.ftui_roles import games, departemen, prodi, animeenjoyer
-from cogs.utility.serverkuliah import games, kost
+from cogs.utility.serverkuliah import games, kost, comic
 
 load_dotenv()
 TOKEN = getenv('TOKEN')
@@ -33,6 +33,7 @@ class Client(commands.Bot):
         self.add_view(view=rolebutton(), message_id=1001100602748715018)
         self.add_view(view=games(), message_id=1042285437693198437)
         self.add_view(view=kost(), message_id=1042286247990804532)
+        self.add_view(view=comic(), message_id=1047099101000515614)
 
 
 client = Client()

@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord.utils import get
 from discord.ext.commands import hybrid_command, hybrid_group, group
 from asyncio import sleep
+from cogs.utility.serverkuliah import comic
 
 class broadcast(commands.Cog):
     def __init__(self, client:discord.Client):
@@ -119,6 +120,15 @@ class broadcast(commands.Cog):
             embed.set_image(url=image)
         await getEmbed.edit(embed=embed)
         await ctx.send("Done", ephemeral=True)
+    
+    @commands.hybrid_command(name="komik", description="komik cuy")
+    async def ini_komik(self, ctx:commands.Context):
+        embed = discord.Embed(
+            title = "Pick your side!",
+            description = "Pilihlah pihak mana kalian berada wahai anak anak Ku!",
+            color = discord.Colour.random()
+        )
+        await ctx.send(embed=embed, view=comic());
 
 async def setup(client):
     await client.add_cog(broadcast(client))

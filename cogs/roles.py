@@ -12,9 +12,9 @@ class adding_role(commands.Cog):
     async def put_roles(self, ctx:commands.Context):
         await ctx.message.delete()
         await ctx.send("Pilih role game mu nak", view=games())
-        sleep(2)
+        await sleep(2)
         await ctx.send("Kau ngekost kah?", view=kost())
-        sleep(2)
+        await sleep(2)
         await ctx.send("Wibu macam mana kau?", view=comic())
 
 async def setup(client):

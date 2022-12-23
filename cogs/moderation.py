@@ -3,7 +3,7 @@ import functools
 import subprocess
 from asyncio import sleep
 from concurrent.futures import ThreadPoolExecutor
-from cogs.utility.serverkuliah import games, kost, polling_warga
+from cogs.utility.serverkuliah import games_pribadi, kost
 from cogs.utility.moderation_button import kick_button, ban_button
 import discord
 from discord import app_commands
@@ -119,10 +119,10 @@ class moderation(commands.Cog):
         await member.unban()
         await ctx.reply(f"{member.mention} has been unbanned from the server\nReason : {reason}", ephemeral = True)
     
-    @commands.hybrid_command(name='poll', description="Polling warga")
-    async def polling_warga(self, ctx:commands.Context, judul:str, timeout:int):
-        await ctx.send(f"Polling {judul} has been created")
-        await ctx.send(f"Polling {judul} has been created", view=polling_warga(judul, timeout)) 
+    # @commands.hybrid_command(name='poll', description="Polling warga")
+    # async def polling_warga(self, ctx:commands.Context, judul:str, timeout:int):
+    #     await ctx.send(f"Polling {judul} has been created")
+    #     await ctx.send(f"Polling {judul} has been created", view=polling_warga(judul, timeout)) 
 
 async def setup(client):
     await client.add_cog(moderation(client))

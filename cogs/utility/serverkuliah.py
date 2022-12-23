@@ -2,7 +2,7 @@ import discord
 from discord.utils import get
 from discord.ui import View, button
 
-class games(View):
+class games_pribadi(View):
     def __init__(self):
         super().__init__(timeout=None)
     

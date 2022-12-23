@@ -11,7 +11,7 @@ class adding_role(commands.Cog):
     @commands.hybrid_command(name="roles")
     async def put_roles(self, ctx:commands.Context):
         await ctx.message.delete()
-        await ctx.send("Pilih role game mu nak", view=games())
+        await ctx.send("Pilih role game mu nak", view=games_pribadi())
         await sleep(2)
         await ctx.send("Kau ngekost kah?", view=kost())
         await sleep(2)

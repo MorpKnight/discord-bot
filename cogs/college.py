@@ -6,8 +6,11 @@ import numpy as np
 from scipy.stats import linregress
 import openai
 from asyncio import sleep
+from dotenv import load_dotenv
+from os import getenv
 
-openai.api_key = ""
+load_dotenv()
+openai.api_key = getenv("OPENAI")
 
 class college(commands.Cog):
     def __init__(self, client:discord.Client):

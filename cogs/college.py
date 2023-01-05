@@ -49,10 +49,10 @@ Standard error of the estimate  : {std_err:.4f}
 
     @app_commands.command(name="chatgpt", description="Pre-trained Chat GPT")
     @app_commands.choices(machine_type = [
-        Choice(name='Davinci_002', value="text-davinci-002"),
+        Choice(name="Davinci_002", value="text-davinci-002"),
         Choice(name="Davinci_003", value="text-davinci-003")
     ])
-    async def chat_gpt(self, interaction:discord.Interaction, machine_type:Choice(str), creativity:float, msg:str):
+    async def chat_gpt(self, interaction:discord.Interaction, machine_type:Choice[str], creativity:float, msg:str):
         if machine_type.value == "text-davinci-002":
             message = self.chat(machine_type.value, creativity, msg)
         else:

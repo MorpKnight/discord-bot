@@ -46,7 +46,7 @@ class college(commands.Cog):
             intercept_message = f"Linear formula (y): **{slope:.4f}x + {intercept:.4f}**"
         await interaction.response.send_message(f"""Slope (b): **{slope:.4f}**
 Intercept (a): **{intercept:.4f}**
-Standard error of the estimate: **{std_err:.4f}**
+Standard error of the estimate (STEYX): **{std_err:.4f}**
 {intercept_message}""")
 
     @app_commands.command(name="chatgpt", description="Pre-trained Chat GPT")

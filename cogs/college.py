@@ -41,12 +41,12 @@ class college(commands.Cog):
 
         slope, intercept, r_value, p_value, std_err = linregress(x, y)
         if intercept < 0:
-            intercept_message = f"Linear formula (y)              : {slope:.4f}x - {-intercept:.4f}"
+            intercept_message = f"Linear formula (y): **{slope:.4f}x - {-intercept:.4f}**"
         else:
-            intercept_message = f"Linear formula (y)              : {slope:.4f}x + {intercept:.4f}"
-        await interaction.response.send_message(f"""Slope (b)                       : {slope:.4f}
-Intercept (a)                   : {intercept:.4f}
-Standard error of the estimate  : {std_err:.4f}
+            intercept_message = f"Linear formula (y): **{slope:.4f}x + {intercept:.4f}**"
+        await interaction.response.send_message(f"""Slope (b): **{slope:.4f}**
+Intercept (a): **{intercept:.4f}**
+Standard error of the estimate: **{std_err:.4f}**
 {intercept_message}""")
 
     @app_commands.command(name="chatgpt", description="Pre-trained Chat GPT")

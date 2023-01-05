@@ -33,10 +33,8 @@ class college(commands.Cog):
         x_table.split(" ")
         y_table.split(" ")
 
-        for i in x_table:
-            x = np.append(x, float(i))
-        for i in y_table:
-            y = np.append(y, float(i))
+        x = [float(i) for i in x_table.split(" ")]
+        y = [float(i) for i in y_table.split(" ")]
 
         slope, intercept, r_value, p_value, std_err = linregress(x, y)
         if intercept < 0:

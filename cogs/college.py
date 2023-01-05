@@ -6,7 +6,7 @@ import numpy as np
 from scipy.stats import linregress
 import openai
 
-openai.api_key = "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"
+openai.api_key = ""
 
 class college(commands.Cog):
     def __init__(self, client:discord.Client):

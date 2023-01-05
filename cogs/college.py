@@ -24,7 +24,7 @@ class college(commands.Cog):
         message = completions.choices[0].text
         return message.strip()
 
-    @app_commands.commands(name='least_square', description="Separate array using space")
+    @app_commands.command(name='least_square', description="Separate array using space")
     async def leastsquare(self, interaction:discord.Interaction, x_table:str, y_table:str):
         x = np.array([])
         y = np.array([])

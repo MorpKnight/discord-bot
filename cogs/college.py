@@ -5,6 +5,7 @@ from discord.app_commands import Choice
 import numpy as np
 from scipy.stats import linregress
 import openai
+from asyncio import sleep
 
 openai.api_key = ""
 
@@ -16,7 +17,7 @@ class college(commands.Cog):
         completions = openai.Completion.create(
             engine = machine_type,
             prompt = prompt,
-            max_tokens = 4096,
+            max_tokens = 1024,
             n = 1,
             temperature = creativity
         )
@@ -58,6 +59,7 @@ Standard error of the estimate  : {std_err:.4f}
         else:
             message = self.chat(machine_type.value, creativity, msg)
 
+        await sleep(10)
         await interaction.response.send_message(message)
     
 

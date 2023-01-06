@@ -31,6 +31,13 @@ class college(commands.Cog):
 
     @app_commands.command(name='least_square', description="Separate array using space")
     async def leastsquare(self, interaction:discord.Interaction, x_table:str, y_table:str):
+        def check_len(x, y):
+            if len(x) != len(y):
+                return False
+            else:
+                return True
+        check = check_len(x_table, y_table)
+
         x = np.array([])
         y = np.array([])
 

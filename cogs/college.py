@@ -45,7 +45,7 @@ class college(commands.Cog):
         def regression_line(x):
             return slope * x + intercept
         
-        x_values = list(range(min(x), max(x)))
+        x_values = x
 
         y_values = [regression_line(x) for x in x_values]
 

@@ -8,6 +8,7 @@ import openai
 from asyncio import sleep
 from dotenv import load_dotenv
 from os import getenv
+import matplotlib.pyplot as plt
 
 load_dotenv()
 openai.api_key = getenv("OPENAI")
@@ -40,14 +41,28 @@ class college(commands.Cog):
         y = [float(i) for i in y_table.split(" ")]
 
         slope, intercept, r_value, p_value, std_err = linregress(x, y)
+
+        def regression_line(x):
+            return slope * x + intercept
+        
+        x_values = list(range(min(x), max(x)))
+
+        y_values = [regression_line(x) for x in x_values]
+
+        plt.grid(which='both', color='k', linestyle='--', linewidth=0.5)
+        plt.scatter(x, y)
+        plt.plot(x_values, y_values)
+        plt.savefig("plot.jpg", format="jpg")
+
         if intercept < 0:
             intercept_message = f"Linear formula (y): **{slope:.4f}x - {-intercept:.4f}**"
         else:
             intercept_message = f"Linear formula (y): **{slope:.4f}x + {intercept:.4f}**"
+
         await interaction.response.send_message(f"""Slope (b): **{slope:.4f}**
 Intercept (a): **{intercept:.4f}**
 Standard error of the estimate (STEYX): **{std_err:.4f}**
-{intercept_message}""")
+{intercept_message}""", file=discord.File("plot.jpg"))
 
     @app_commands.command(name="chatgpt", description="Pre-trained Chat GPT")
     @app_commands.choices(machine_type = [

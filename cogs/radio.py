@@ -63,9 +63,8 @@ class discord_radio(commands.Cog):
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             radio_list = ""
-            for radio in config["radio"]:
-                radio_list += f"{radio} - {config['radio'][radio]}"
-            await interaction.response.send_message(radio_list, ephemeral=True)
+            for key, value in config["radio"].items():
+                radio_list += f"{key}\n"
         elif type == "play":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)

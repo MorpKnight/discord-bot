@@ -70,7 +70,6 @@ class discord_radio(commands.Cog):
                 await interaction.response.send_message("Radio not found")
         elif func.value == "stop":
             if interaction.guild.voice_client:
-                await interaction.guild.voice_client.disconnect()
                 self.voice_client = None
                 self.voice_context = None
                 await interaction.response.send_message("Stopped")

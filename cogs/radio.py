@@ -24,7 +24,7 @@ class discord_radio(commands.Cog):
             await ctx.send("playing radio")
         
     @app_commands.command(name='radio', description='Play music from e-radio')
-    @app_commands.choices(type=[
+    @app_commands.choices(func=[
         Choice(name="add", value="add"),
         Choice(name="remove", value="remove"),
         Choice(name="list", value="list"),
@@ -38,8 +38,8 @@ class discord_radio(commands.Cog):
         Choice(name="Japan A Radio", value="Japan A Radio"),
         Choice(name="J-Pop Powerplay Kawaii", value="J-Pop Powerplay Kawaii"),
     ])
-    async def radio_music(self, interaction:discord.Interaction, type:Choice[str], radio_name:Choice[str]=None, new_name:str=None, new_url:str=None):
-        if type == "add":
+    async def radio_music(self, interaction:discord.Interaction, func:Choice[str], radio_name:Choice[str]=None, new_name:str=None, new_url:str=None):
+        if func == "add":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name in config["radio"]:
@@ -49,7 +49,7 @@ class discord_radio(commands.Cog):
                 with open("config.yml", "w") as f:
                     yaml.dump(config, f)
                 await interaction.response.send_message("Radio added", ephemeral=True)
-        elif type == "remove":
+        elif func == "remove":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name in config["radio"]:
@@ -59,14 +59,14 @@ class discord_radio(commands.Cog):
                 await interaction.response.send_message("Radio removed")
             else:
                 await interaction.response.send_message("Radio not found")
-        elif type == "list":
+        elif func == "list":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             radio_list = ""
             for key, value in config["radio"].items():
                 radio_list += f"{key}\n"
             await interaction.response.send_message(radio_list)
-        elif type == "play":
+        elif func == "play":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name in config["radio"]:

@@ -32,27 +32,18 @@ class discord_radio(commands.Cog):
     ])
     @app_commands.choices(radio_name = [
         Choice(name=f"{key}", value=f"{key}") for key, value in yaml.safe_load(open("config.yml", "r"))["radio"].items()
-        # config = yaml.safe_load(open("config.yml", "r"))
-        # for key, value in config["radio"].items():
-        #     Choice(name=f"{key}", value=f"{key}")
-        # Choice(name="Prambors", value="Prambors"),
-        # Choice(name="Symphony 924", value="Symphony 924"),
-        # Choice(name="Japan Radio Osaka", value="Japan Radio Osaka"),
-        # Choice(name="NHK", value="NHK"),
-        # Choice(name="Japan A Radio", value="Japan A Radio"),
-        # Choice(name="J-Pop Powerplay Kawaii", value="J-Pop Powerplay Kawaii"),
     ])
     async def radio_music(self, interaction:discord.Interaction, func:Choice[str], radio_name:Choice[str]=None, new_name:str=None, new_url:str=None):
         if func.value == "add":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name.value in config["radio"]:
-                await interaction.response.send_message("Radio already exists", ephemeral=True)
+                await interaction.response.send_message("Radio already exists")
             else:
                 config['radio'][f"{new_name}"] = f"{new_url}"
                 with open("config.yml", "w") as f:
                     yaml.dump(config, f)
-                await interaction.response.send_message("Radio added", ephemeral=True)
+                await interaction.response.send_message("Radio added")
         elif func.value == "remove":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
@@ -69,14 +60,22 @@ class discord_radio(commands.Cog):
             radio_list = ""
             for key, value in config["radio"].items():
                 radio_list += f"{key}\n"
-            await interaction.response.send_message(radio_list, ephemeral=True)
+            await interaction.response.send_message(radio_list)
         elif func.value == "play":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name.value in config["radio"]:
                 await self.radio_player(interaction, config["radio"][f"{radio_name.value}"])
             else:
-                await interaction.response.send_message("Radio not found", ephemeral=True)
+                await interaction.response.send_message("Radio not found")
+        elif func.value == "stop":
+            if interaction.guild.voice_client:
+                await interaction.guild.voice_client.disconnect()
+                self.voice_client = None
+                self.voice_context = None
+                await interaction.response.send_message("Stopped")
+            else:
+                await interaction.response.send_message("Not playing")
 
 
 async def setup(client):

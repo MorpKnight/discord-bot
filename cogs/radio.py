@@ -45,7 +45,7 @@ class discord_radio(commands.Cog):
             if radio_name in config["radio"]:
                 await interaction.response.send_message("Radio already exists", ephemeral=True)
             else:
-                config["radio"] = new_name
+                config['radio'][f"{new_name}"] = f"{new_url}"
                 with open("config.yml", "w") as f:
                     yaml.dump(config, f)
                 await interaction.response.send_message("Radio added", ephemeral=True)
@@ -53,7 +53,7 @@ class discord_radio(commands.Cog):
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name in config["radio"]:
-                del config["radio"][radio_name]
+                del config["radio"][f"{radio_name}"]
                 with open("config.yml", "w") as f:
                     yaml.dump(config, f)
                 await interaction.response.send_message("Radio removed")
@@ -70,7 +70,7 @@ class discord_radio(commands.Cog):
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name in config["radio"]:
-                await self.radio_player(interaction, config["radio"][radio_name])
+                await self.radio_player(interaction, config["radio"][f"{radio_name}"])
             else:
                 await interaction.response.send_message("Radio not found", ephemeral=True)
 

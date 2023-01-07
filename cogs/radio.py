@@ -38,7 +38,7 @@ class discord_radio(commands.Cog):
         Choice(name="Japan A Radio", value="Japan A Radio"),
         Choice(name="J-Pop Powerplay Kawaii", value="J-Pop Powerplay Kawaii"),
     ])
-    async def radio_music(self, interaction:discord.Interaction, type:Choice[str], radio_name:Choice[str], new_name:str=None, new_url:str=None):
+    async def radio_music(self, interaction:discord.Interaction, type:Choice[str], radio_name:Choice[str]=None, new_name:str=None, new_url:str=None):
         if type == "add":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)

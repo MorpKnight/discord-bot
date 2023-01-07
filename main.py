@@ -6,10 +6,13 @@ from cogs.utility.tekkomp_roles import game_roles, residence
 from cogs.utility.serversma import rolebutton
 from cogs.utility.ftui_roles import games, departemen, prodi, animeenjoyer
 from cogs.utility.serverkuliah import games_pribadi, kost, comic
+import yaml
 
 load_dotenv()
 TOKEN = getenv('TOKEN')
 
+with open("config.yml", "r") as f:
+    data = yaml.safe_load(f)
 class Client(commands.Bot):
     def __init__(self):
         super().__init__(

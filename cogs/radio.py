@@ -10,18 +10,18 @@ class discord_radio(commands.Cog):
         self.voice_client = None
         self.voice_context = None
     
-    async def radio_player(self, ctx:commands.Context, source:str):
-        voiceChannel = ctx.author.voice
+    async def radio_player(self, interaction:discord.Interaction, source:str):
+        voiceChannel = interaction.user.voice
         if voiceChannel and voiceChannel.channel:
-            if ctx.voice_client:
+            if interaction.guild.voice_client:
                 pass
             else:
                 await voiceChannel.channel.connect()
-                self.voice_client = ctx.voice_client
-                self.voice_context = ctx
+                self.voice_client = interaction.guild.voice_client
+                self.voice_context = interaction
                 
             self.voice_client.play(FFmpegPCMAudio(source))
-            await ctx.send("playing radio")
+            await interaction.response.send_message("Playing radio", ephemeral=True)
         
     @app_commands.command(name='radio', description='Play music from e-radio')
     @app_commands.choices(func=[

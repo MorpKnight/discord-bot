@@ -56,15 +56,16 @@ class discord_radio(commands.Cog):
                 del config["radio"][radio_name]
                 with open("config.yml", "w") as f:
                     yaml.dump(config, f)
-                await interaction.response.send_message("Radio removed", ephemeral=True)
+                await interaction.response.send_message("Radio removed")
             else:
-                await interaction.response.send_message("Radio not found", ephemeral=True)
+                await interaction.response.send_message("Radio not found")
         elif type == "list":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             radio_list = ""
             for key, value in config["radio"].items():
                 radio_list += f"{key}\n"
+            await interaction.response.send_message(radio_list)
         elif type == "play":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)

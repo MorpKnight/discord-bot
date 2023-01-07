@@ -9,6 +9,7 @@ import discord
 from discord import app_commands
 from discord.app_commands import Choice, checks
 from discord.ext import commands
+import os
 
 class command_prompt_class():
     def run_cmd(cmd):
@@ -76,16 +77,17 @@ class moderation(commands.Cog):
     
     @app_commands.command(name='reload', description='Reload an extension')
     @app_commands.choices(extension = [
-        Choice(name="anime", value="anime"),
-        Choice(name='autonomus_voice', value='autonomus_voice'),
-        Choice(name='broadcast_message', value='broadcast_message'),
-        Choice(name='command', value='command'),
-        Choice(name='errorhandler', value='errorhandler'),
-        Choice(name='member_join', value='member_join'),
-        Choice(name='message', value='message'),
-        Choice(name='moderation', value='moderation'),
-        Choice(name='radio', value='radio'),
-        Choice(name='voicechannel', value='voicechannel'),
+        Choice(name=f"{f[:-3].capitalize()}", value=f"{f[:-3]}") for f in os.listdir("./cogs") if f.endswith(".py")
+        # Choice(name="anime", value="anime"),
+        # Choice(name='autonomus_voice', value='autonomus_voice'),
+        # Choice(name='broadcast_message', value='broadcast_message'),
+        # Choice(name='command', value='command'),
+        # Choice(name='errorhandler', value='errorhandler'),
+        # Choice(name='member_join', value='member_join'),
+        # Choice(name='message', value='message'),
+        # Choice(name='moderation', value='moderation'),
+        # Choice(name='radio', value='radio'),
+        # Choice(name='voicechannel', value='voicechannel'),
 
     ])
     async def re_load_extension(self, interaction:discord.Interaction, extension:Choice[str]):

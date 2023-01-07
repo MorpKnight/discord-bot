@@ -39,7 +39,7 @@ class discord_radio(commands.Cog):
         Choice(name="J-Pop Powerplay Kawaii", value="J-Pop Powerplay Kawaii"),
     ])
     async def radio_music(self, interaction:discord.Interaction, func:Choice[str], radio_name:Choice[str]=None, new_name:str=None, new_url:str=None):
-        if func == "add":
+        if func.value == "add":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name in config["radio"]:
@@ -49,7 +49,7 @@ class discord_radio(commands.Cog):
                 with open("config.yml", "w") as f:
                     yaml.dump(config, f)
                 await interaction.response.send_message("Radio added", ephemeral=True)
-        elif func == "remove":
+        elif func.value == "remove":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name in config["radio"]:
@@ -59,14 +59,14 @@ class discord_radio(commands.Cog):
                 await interaction.response.send_message("Radio removed")
             else:
                 await interaction.response.send_message("Radio not found")
-        elif func == "list":
+        elif func.value == "list":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             radio_list = ""
             for key, value in config["radio"].items():
                 radio_list += f"{key}\n"
             print(radio_list)
-        elif func == "play":
+        elif func.value == "play":
             with open("config.yml", "r") as f:
                 config = yaml.safe_load(f)
             if radio_name in config["radio"]:

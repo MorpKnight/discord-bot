@@ -3,7 +3,6 @@ from discord.ext import commands
 from discord import FFmpegPCMAudio, app_commands
 from discord.app_commands import Choice
 import yaml
-
 class discord_radio(commands.Cog):
     def __init__(self, client:discord.Client):
         self.client = client
@@ -29,14 +28,19 @@ class discord_radio(commands.Cog):
         Choice(name="remove", value="remove"),
         Choice(name="list", value="list"),
         Choice(name="play", value="play"),
+        Choice(name='Stop', value='stop')
     ])
     @app_commands.choices(radio_name = [
-        Choice(name="Prambors", value="Prambors"),
-        Choice(name="Symphony 924", value="Symphony 924"),
-        Choice(name="Japan Radio Osaka", value="Japan Radio Osaka"),
-        Choice(name="NHK", value="NHK"),
-        Choice(name="Japan A Radio", value="Japan A Radio"),
-        Choice(name="J-Pop Powerplay Kawaii", value="J-Pop Powerplay Kawaii"),
+        Choice(name=f"{key}", value=f"{key}") for key, value in yaml.safe_load(open("config.yml", "r"))["radio"].items()
+        # config = yaml.safe_load(open("config.yml", "r"))
+        # for key, value in config["radio"].items():
+        #     Choice(name=f"{key}", value=f"{key}")
+        # Choice(name="Prambors", value="Prambors"),
+        # Choice(name="Symphony 924", value="Symphony 924"),
+        # Choice(name="Japan Radio Osaka", value="Japan Radio Osaka"),
+        # Choice(name="NHK", value="NHK"),
+        # Choice(name="Japan A Radio", value="Japan A Radio"),
+        # Choice(name="J-Pop Powerplay Kawaii", value="J-Pop Powerplay Kawaii"),
     ])
     async def radio_music(self, interaction:discord.Interaction, func:Choice[str], radio_name:Choice[str]=None, new_name:str=None, new_url:str=None):
         if func.value == "add":
@@ -74,40 +78,6 @@ class discord_radio(commands.Cog):
             else:
                 await interaction.response.send_message("Radio not found", ephemeral=True)
 
-    # @commands.hybrid_group(name='radio', description='Play music from e-radio')
-    # async def radio_music(self, ctx:commands.Context):
-    #     if ctx.invoked_subcommand:
-    #         await ctx.send(f"{ctx.prefix}help radio")
-    
-    # @radio_music.command(name='prambors', description='Play radio from PramborsFM')
-    # async def radio_prambors(self, ctx:commands.Context):
-    #     source = "https://22283.live.streamtheworld.com/PRAMBORS_FM.mp3?dist=pramborsweb&tdsdk=js-2.9&swm=false&pname=tdwidgets&pversion=2.9&banners=300x250&burst-time=15&sbmid=2602d526-9abc-43ce-ef30-98113d654ceb"
-    #     await self.radio_player(ctx, source)
-
-    # @radio_music.command(name="symphony924", description="Play radio from Symphony924")
-    # async def radio_symphony(self, ctx:commands.Context):
-    #     source = "https://14033.live.streamtheworld.com/SYMPHONY924AAC.aac?dist=radiosingapore"
-    #     await self.radio_player(ctx, source)
-
-    # @radio_music.command(name='japanimradio_osaka', description='Play radio from Japanimradio - Osaka')
-    # async def radio_osaka(self, ctx:commands.Context):
-    #     source = "https://ais-edge51-live365-dal02.cdnstream.com/a51684"
-    #     await self.radio_player(ctx, source)
-    
-    # @radio_music.command(name='nhk', description='Plays NHK radio')
-    # async def radio_nhk(self, ctx:commands.Context):
-    #     source = "https://kathy.torontocast.com:3560/"
-    #     await self.radio_player(ctx, source)
-    
-    # @radio_music.command(name='japan_a_radio', description='Plays Japan a Radio radio')
-    # async def radio_japan_a(self, ctx:commands.Context):
-    #     source = "https://audio.misproductions.com/japan128k"
-    #     await self.radio_player(ctx, source)
-    
-    # @radio_music.command(name="powerplay_kawaii", description="Play J-Pop Powerplay Kawaii")
-    # async def radio_jpop_kawaii(self, ctx:commands.Context):
-    #     source = "https://kathy.torontocast.com:3060/;"
-    #     await self.radio_player(ctx, source)
 
 async def setup(client):
     await client.add_cog(discord_radio(client))

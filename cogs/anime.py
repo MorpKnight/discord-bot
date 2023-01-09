@@ -5,7 +5,7 @@ from discord.ext import commands
 from AnilistPython import Anilist
 from mal import Anime, Manga, AnimeSearch, MangaSearch
 
-class Anime(commands.Cog):
+class anime_manga(commands.Cog):
     def __init__(self, client):
         self.client = client
     
@@ -42,4 +42,4 @@ class Anime(commands.Cog):
             pass
 
 async def setup(client):
-    await client.add_cog(Anime(client))
+    await client.add_cog(anime_manga(client))

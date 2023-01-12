@@ -9,26 +9,26 @@ class anime_manga(commands.Cog):
     def __init__(self, client):
         self.client = client
     
-    async def search_anime(self, interaction:discord.Interaction, title:str):
-        animePage = AnimeSearch(title)
-        result = Anime(animePage.results[0].mal_id)
+    # async def search_anime(self, interaction:discord.Interaction, title:str):
+    #     animePage = AnimeSearch(title)
+    #     result = Anime(animePage.results[0].mal_id)
 
-        embed = discord.Embed(
-            title = f"{result.title}; {result.title_japanese}; {result.title_english}",
-            description = f"{result.synopsis}",
-            color = discord.Color.random()
-        )
-        embed.add_field(name = "Type", value = f"{result.type} - {result.episodes} eps", inline = True)
-        embed.add_field(name = "Studios", value = f"{result.studios}", inline = True)
-        embed.add_field(name = "Premiered", value = f"{result.premiered}({result.aired})", inline = True)
-        embed.add_field(name = "Score/Ranked", value = f"{result.score}/{result.rank}", inline = False)
-        embed.add_field(name = "Source", value = f"{result.source}", inline = True)
-        embed.add_field(name = "Status", value = f"{result.status}", inline = True)
-        embed.add_field(name = "Genres", value = ", ".join(result.genres), inline = False)
-        embed.set_thumbnail(url = result.image_url)
-        embed.set_footer(text = f"[Click here]({result.url}) to access via MAL")
+    #     embed = discord.Embed(
+    #         title = f"{result.title}; {result.title_japanese}; {result.title_english}",
+    #         description = f"{result.synopsis}",
+    #         color = discord.Color.random()
+    #     )
+    #     embed.add_field(name = "Type", value = f"{result.type} - {result.episodes} eps", inline = True)
+    #     embed.add_field(name = "Studios", value = f"{result.studios}", inline = True)
+    #     embed.add_field(name = "Premiered", value = f"{result.premiered}({result.aired})", inline = True)
+    #     embed.add_field(name = "Score/Ranked", value = f"{result.score}/{result.rank}", inline = False)
+    #     embed.add_field(name = "Source", value = f"{result.source}", inline = True)
+    #     embed.add_field(name = "Status", value = f"{result.status}", inline = True)
+    #     embed.add_field(name = "Genres", value = ", ".join(result.genres), inline = False)
+    #     embed.set_thumbnail(url = result.image_url)
+    #     embed.set_footer(text = f"[Click here]({result.url}) to access via MAL")
 
-        return embed
+    #     return embed
 
     @app_commands.command(name='search', description="Search anime or manga in MyAnimeList")
     @app_commands.choices(format = [
@@ -37,9 +37,11 @@ class anime_manga(commands.Cog):
     ])
     async def search_anime_manga(self, interaction:discord.Interaction, format:Choice[str], title:str):
         if format.value == "anime":
-            embed = await self.search_anime(interaction, title)
-            await interaction.response.send_message(embed=embed)
-            
+            anime_page = AnimeSearch(title)
+            result = Anime(mal_id=anime_page.results[0].mal_id)
+
+            await interaction.response.send_message(f"{result.title}")
+
         elif format.value == "manga":
             pass
 

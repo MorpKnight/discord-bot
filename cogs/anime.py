@@ -42,8 +42,8 @@ class anime_manga(commands.Cog):
             result = Anime(mal_id=anime_page.results[0].mal_id)
 
             await interaction.response.defer()
-            await sleep()
-            await interaction.followup.send(f"{result.title}")
+            await sleep(5)
+            await interaction.followup.send(content=f"{result.title}")
 
         elif format.value == "manga":
             pass

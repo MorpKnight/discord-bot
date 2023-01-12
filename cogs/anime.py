@@ -28,7 +28,7 @@ class anime_manga(commands.Cog):
         embed.set_thumbnail(url = result.image_url)
         embed.set_footer(text = f"[Click here]({result.url}) to access via MAL")
 
-        await interaction.response.send_message(embed=embed)
+        return embed
 
     @app_commands.command(name='search', description="Search anime or manga in MyAnimeList")
     @app_commands.choices(format = [
@@ -37,7 +37,9 @@ class anime_manga(commands.Cog):
     ])
     async def search_anime_manga(self, interaction:discord.Interaction, format:Choice[str], title:str):
         if format.value == "anime":
-            await self.search_anime(interaction, title)
+            embed = await self.search_anime(interaction, title)
+            await interaction.response.send_message(embed=embed)
+            
         elif format.value == "manga":
             pass
 

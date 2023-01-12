@@ -4,6 +4,7 @@ from discord.app_commands import Choice, choices
 from discord.ext import commands
 from AnilistPython import Anilist
 from mal import Anime, Manga, AnimeSearch, MangaSearch
+from asyncio import sleep
 
 class anime_manga(commands.Cog):
     def __init__(self, client):
@@ -40,7 +41,9 @@ class anime_manga(commands.Cog):
             anime_page = AnimeSearch(title)
             result = Anime(mal_id=anime_page.results[0].mal_id)
 
-            await interaction.response.send_message(f"{result.title}")
+            await interaction.response.defer()
+            await sleep()
+            await interaction.followup.send(f"{result.title}")
 
         elif format.value == "manga":
             pass

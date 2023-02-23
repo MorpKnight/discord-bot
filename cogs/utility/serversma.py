@@ -1,6 +1,4 @@
-import discord
-from discord.ui import Button, View
-from discord.utils import get
+from discord.ui import View
 from cogs.utility.ViewUtility import MultiRoleSelectEmoji
 
 class GameSelect(MultiRoleSelectEmoji):
@@ -11,7 +9,7 @@ class GameSelect(MultiRoleSelectEmoji):
         super().__init__(
             placeholder="Choose your games",
             role_list=self.role_list,
-            emoji_list=self.emoji_list,
+            emoji=self.emoji_list,
             max_values=len(self.role_list),
             custom_id="games"
         )

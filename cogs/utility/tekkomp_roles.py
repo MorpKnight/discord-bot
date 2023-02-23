@@ -1,6 +1,4 @@
-import discord
 from discord.ui import View
-from discord.utils import get
 from cogs.utility.ViewUtility import SingleRoleSelect, MultiRoleSelectEmoji
 
 class GamesSelect(MultiRoleSelectEmoji):

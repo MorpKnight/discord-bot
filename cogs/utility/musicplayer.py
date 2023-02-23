@@ -8,7 +8,7 @@ from discord import ButtonStyle, FFmpegPCMAudio
 from discord.ui import Button, View, button
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
-from youtube_dl import YoutubeDL
+from yt_dlp import YoutubeDL
 
 load_dotenv()
 publicKey = getenv("PUBLICKEY")

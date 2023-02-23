@@ -1,8 +1,8 @@
 Roles:
   Tekkom:
     filename: tekkomp_roles
-    games: 1068500876567789598
-    kost: 1068500928514244619
+    games: 1078270539115806781
+    kost: 1078270560007630968
   Backroom:
     filename: serverkuliah
     games: 1078250091464364033
@@ -14,9 +14,10 @@ Roles:
     mpkt: 1078250322524377108
   FTUI:
     filename: ftui_roles
-    games:
-    departemen:
-    prodi:
+    games: 1078271108249301023
+    departemen: 1078270991299510353
+    prodi: 1078271108224122931
+    animeenjoyer: 1078271160581619753
   SMA:
     filename: serversma
     games: 1001100602748715018

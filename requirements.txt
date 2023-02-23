@@ -1,0 +1,14 @@
+discord.py
+python-dotenv
+PyNaCl
+youtube-dl
+requests
+spotipy
+AnilistPython
+discord-together
+numpy
+openai
+scikit-learn
+scipy
+matplotlib
+mal-api

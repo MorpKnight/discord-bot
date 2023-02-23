@@ -1,0 +1,26 @@
+Roles:
+  Tekkom:
+    filename: tekkomp_roles
+    games: 1068500876567789598
+    kost: 1068500928514244619
+  Backroom:
+    filename: serverkuliah
+    games: 1068500408177274880
+    comic: 1068500698616041513
+    kost: 1068500631289073754
+  FTUI:
+    filename: ftui_roles
+    games:
+    departemen:
+    prodi:
+  SMA:
+    filename: serversma
+    games: 1001100602748715018
+
+radio:
+  Prambors: https://22283.live.streamtheworld.com/PRAMBORS_FM.mp3?dist=pramborsweb&tdsdk=js-2.9&swm=false&pname=tdwidgets&pversion=2.9&banners=300x250&burst-time=15&sbmid=2602d526-9abc-43ce-ef30-98113d654ceb
+  Symphony 924: https://14033.live.streamtheworld.com/SYMPHONY924AAC.aac?dist=radiosingapore
+  Japan Radio Osaka: https://ais-edge51-live365-dal02.cdnstream.com/a51684
+  NHK: https://kathy.torontocast.com:3560/
+  Japan A Radio: https://audio.misproductions.com/japan128k
+  J-Pop Powerplay Kawaii: https://kathy.torontocast.com:3060/;

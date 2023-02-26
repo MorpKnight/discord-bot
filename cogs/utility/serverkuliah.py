@@ -52,6 +52,22 @@ class KelasAlin(SingleRoleSelect):
             custom_id='kelas_alin'
         )
 
+class KelasProgLan(SingleRoleSelect):
+    def __init__(self):
+        super().__init__(
+            placeholder='Kelas Pemrograman Lanjut',
+            role_list=['Proglan 01', 'Proglan 02'],
+            custom_id='kelas_proglan'
+        )
+
+class KelasOAK(SingleRoleSelect):
+    def __init__(self):
+        super().__init__(
+            placeholder='Kelas Organisasi dan Arsitektur Komputer',
+            role_list=['OAK 01', 'OAK 02'],
+            custom_id='kelas_oak'
+        )
+
 class Organisasi(SingleRoleSelect):
     def __init__(self):
         super().__init__(
@@ -88,6 +104,16 @@ class mpkt(View):
     def __init__(self):
         super().__init__(timeout=None)
         self.add_item(KelasMPKT())
+
+class proglan(View):
+    def __init__(self):
+        super().__init__(timeout=None)
+        self.add_item(KelasProgLan())
+
+class oak(View):
+    def __init__(self):
+        super().__init__(timeout=None)
+        self.add_item(KelasOAK())
 
 class organisasi(View):
     def __init__(self):

@@ -54,7 +54,7 @@ class command(commands.Cog):
         else:
             spllited_text = [text]
         return spllited_text
-    
+
     @commands.hybrid_command(name='ping', description="Check bot's latency to server")
     async def _ping(self, ctx:commands.Context):
         result = round(self.client.latency * 1000)

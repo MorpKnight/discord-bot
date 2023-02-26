@@ -6,11 +6,6 @@ import yaml
 from discord.ext import commands
 from dotenv import load_dotenv
 
-import cogs.utility.ftui_roles as FTUI
-import cogs.utility.serverkuliah as Backroom
-import cogs.utility.serversma as SMA
-import cogs.utility.tekkomp_roles as Tekkom
-
 load_dotenv()
 TOKEN = getenv('TOKEN')
 

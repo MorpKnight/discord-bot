@@ -1,18 +1,14 @@
-from asyncio import sleep
-
 import discord
-import yaml
 from discord import app_commands
 from discord.app_commands import Choice, choices
 from discord.ext import commands
-from discord.utils import get
 
 import cogs.utility.ftui_roles as RolesFTUI
 import cogs.utility.serverkuliah as RolesBackroom
 import cogs.utility.serversma as RolesSMA
 import cogs.utility.tekkomp_roles as RolesTekkom
 
-role_list = ['games', 'kost', 'comic', 'departemen', 'prodi', 'animeenjoyer', 'alin', 'fismek', 'mpkt', 'organisasi']
+role_list = ['games', 'kost', 'comic', 'departemen', 'prodi', 'animeenjoyer', 'alin', 'fismek', 'mpkt', 'proglan', 'oak', 'organisasi']
 class adding_role(commands.Cog):
     def __init__(self, client:discord.Client):
         self.client = client
@@ -64,6 +60,10 @@ class adding_role(commands.Cog):
                                 viewRole = RolesBackroom.fismek()
                             case 'mpkt':
                                 viewRole = RolesBackroom.mpkt()
+                            case 'proglan':
+                                viewRole = RolesBackroom.proglan()
+                            case 'oak':
+                                viewRole = RolesBackroom.oak()
                             case 'organisasi':
                                 viewRole = RolesBackroom.organisasi()
                             case 'games':

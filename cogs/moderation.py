@@ -86,6 +86,8 @@ class moderation(commands.Cog):
         await interaction.response.send_message(f"Reloading {extension.value}")
     
     @app_commands.command(name = 'vote', description = "Vote to kick or ban a user")
+    @app_commands.checks.has_permissions(kick_members=True)
+    @app_commands.checks.has_permissions(ban_members=True)
     @app_commands.choices(type = [
         Choice(name = "Kick", value = "kick"),
         Choice(name = "Ban", value = "ban")

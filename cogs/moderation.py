@@ -94,21 +94,27 @@ class moderation(commands.Cog):
     ])
     async def vote_kick_ban(self, interaction:discord.Interaction, type:Choice[str], member:discord.Member, reason:str = None):
         if type.value == "kick":
-            embed = discord.Embed(
-                title = "Voting to KICK",
-                description = f"{member.mention} has been put in voting to be kicked from the server.\nReason: {reason}",
-                color = discord.Color.red()
-            )
-            embed.set_footer(text = f'Voting : 0/5')
-            await interaction.response.send_message(embed=embed, view=kick_button(member))
+                if member.id == 385053392059236353 or member.id == self.client.user.id:
+                    return await interaction.response.send_message("You can't kick me", ephemeral=True)
+                else:
+                    embed = discord.Embed(
+                        title = "Voting to KICK",
+                        description = f"{member.mention} has been put in voting to be kicked from the server.\nReason: {reason}",
+                        color = discord.Color.red()
+                    )
+                    embed.set_footer(text = f'Voting : 0/5')
+                    await interaction.response.send_message(embed=embed, view=kick_button(member))
         elif type.value == "ban":
-            embed = discord.Embed(
-                title = "Voting to BAN",
-                description = f"{member.mention} has been put in voting to be banned from the server.\nReason: {reason}",
-                color = discord.Color.red()
-            )
-            embed.set_footer(text = 'Voting : 0/5')
-            await interaction.response.send_message(embed=embed, view=ban_button(member))
+            if member.id == 385053392059236353 or member.id == self.client.user.id:
+                    return await interaction.response.send_message("You can't ban me", ephemeral=True)
+            else:
+                embed = discord.Embed(
+                    title = "Voting to BAN",
+                    description = f"{member.mention} has been put in voting to be banned from the server.\nReason: {reason}",
+                    color = discord.Color.red()
+                )
+                embed.set_footer(text = 'Voting : 0/5')
+                await interaction.response.send_message(embed=embed, view=ban_button(member))
     
     @commands.hybrid_command(name='unban', description = "Unban a user from the server")
     async def _unban(self, ctx, member:discord.Member, *, reason:str=None):

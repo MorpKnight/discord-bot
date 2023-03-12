@@ -6,12 +6,12 @@ from asyncio import sleep
 from concurrent.futures import ThreadPoolExecutor
 
 import discord
+import yaml
+from cogs.utility.moderation_button import VoteButton
 from discord import app_commands
 from discord.app_commands import Choice, checks
-from discord.ext import commands
-
-from cogs.utility.moderation_button import ban_button, kick_button
-
+from discord.ext import commands, tasks
+import datetime
 
 class command_prompt_class():
     def run_cmd(cmd):
@@ -52,6 +52,19 @@ class moderation(commands.Cog):
     def __init__(self, client:discord.Client):
         self.client = client
         self.cmd = command_prompt_class()
+        self.checkQuota.start()
+    
+    @tasks.loop(minutes=1)
+    async def checkQuota(self):
+        with open("config.yml", "r+") as f:
+            data = yaml.safe_load(f)
+            now = datetime.datetime.now()
+            if now.strftime("%H:%M:%S") == "00:00:00":
+                data['quota']['kick'] = 5
+                data['quota']['ban'] = 5
+                f.seek(0)
+                yaml.dump(data, f, default_flow_style=False)
+                f.truncate()
 
     @app_commands.command(name='move', description="Move member to another voice channel")
     @app_commands.checks.has_permissions(move_members=True)
@@ -86,35 +99,29 @@ class moderation(commands.Cog):
         await interaction.response.send_message(f"Reloading {extension.value}")
     
     @app_commands.command(name = 'vote', description = "Vote to kick or ban a user")
-    @app_commands.checks.has_permissions(kick_members=True)
-    @app_commands.checks.has_permissions(ban_members=True)
     @app_commands.choices(type = [
         Choice(name = "Kick", value = "kick"),
         Choice(name = "Ban", value = "ban")
     ])
     async def vote_kick_ban(self, interaction:discord.Interaction, type:Choice[str], member:discord.Member, reason:str = None):
         if type.value == "kick":
-                if member.id == 385053392059236353 or member.id == self.client.user.id:
-                    return await interaction.response.send_message("You can't kick me", ephemeral=True)
-                else:
-                    embed = discord.Embed(
-                        title = "Voting to KICK",
-                        description = f"{member.mention} has been put in voting to be kicked from the server.\nReason: {reason}",
-                        color = discord.Color.red()
-                    )
-                    embed.set_footer(text = f'Voting : 0/5')
-                    await interaction.response.send_message(embed=embed, view=kick_button(member))
+            embed = discord.Embed(
+                title = "Voting to KICK",
+                description = f"{member.mention} has been put in voting to be kicked from the server.\nReason: {reason}",
+                color = discord.Color.red()
+            )
+            embed.set_footer(text = f'Voting : 0/5')
+            await interaction.response.send_message(embed=embed, view=VoteButton(member, type.value))
         elif type.value == "ban":
-            if member.id == 385053392059236353 or member.id == self.client.user.id:
-                    return await interaction.response.send_message("You can't ban me", ephemeral=True)
-            else:
-                embed = discord.Embed(
-                    title = "Voting to BAN",
-                    description = f"{member.mention} has been put in voting to be banned from the server.\nReason: {reason}",
-                    color = discord.Color.red()
-                )
-                embed.set_footer(text = 'Voting : 0/5')
-                await interaction.response.send_message(embed=embed, view=ban_button(member))
+            embed = discord.Embed(
+                title = "Voting to BAN",
+                description = f"{member.mention} has been put in voting to be banned from the server.\nReason: {reason}",
+                color = discord.Color.red()
+            )
+            embed.set_footer(text = f'Voting : 0/5')
+            await interaction.response.send_message(embed=embed, view=VoteButton(member, type.value))            
+        else:
+            await interaction.response.send_message("Invalid type", ephemeral=True)
     
     @commands.hybrid_command(name='unban', description = "Unban a user from the server")
     async def _unban(self, ctx, member:discord.Member, *, reason:str=None):

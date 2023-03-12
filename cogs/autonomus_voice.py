@@ -13,11 +13,11 @@ class autonomus_vc(commands.Cog):
         self.check_channel.start()
 
     @app_commands.command(name='create_vc', description="Create voice channel temporart")
-    async def create_voice(self, interaction:discord.Interaction, category_id:int ,channel_name:str):
-        category = discord.utils.get(interaction.guild.categories, id=category_id)
-        await interaction.guild.create_voice_channel(name=channel_name, category=category)
-        fetchVoice = discord.utils.get(interaction.guild.channels, name=channel_name)
+    async def create_voice(self, interaction:discord.Interaction, category:discord.CategoryChannel, name:str):
+        await interaction.guild.create_voice_channel(name=name, category=category)
+        fetchVoice = discord.utils.get(interaction.guild.channels, name=name)
         await interaction.response.send_message(f"Successfully created {fetchVoice.mention}")
+        self.channel.append(name)
         self.information_channel_id = interaction.channel.id
     
     @tasks.loop(seconds=60)

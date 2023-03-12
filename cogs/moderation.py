@@ -107,9 +107,9 @@ class moderation(commands.Cog):
     ])
     async def vote_kick_ban(self, interaction:discord.Interaction, type:Choice[str], member:discord.Member, reason:str = None):
         if type.value == "kick":
-            await VoteButton(type, member, reason)
+            await VoteButton(type, member)
         elif type.value == "ban":
-            await VoteButton(type, member, reason)
+            await VoteButton(type, member)
         else:
             await interaction.response.send_message("Invalid type", ephemeral=True)
         # if type.value == "kick":

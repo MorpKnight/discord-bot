@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import discord
 import yaml
-from cogs.utility.moderation_button import ban_button, kick_button, VoteButton
+from cogs.utility.moderation_button import VoteButton
 from discord import app_commands
 from discord.app_commands import Choice, checks
 from discord.ext import commands, tasks

@@ -52,11 +52,6 @@ class college(commands.Cog):
 Intercept (a): **{intercept:.4f}**
 Standard error of the estimate (STEYX): **{std_err:.4f}**
 {intercept_message}""", file=discord.File("plot.jpg"))
-        os.remove("plot.jpg")
-        x = np.array([])
-        y = np.array([])
-        x_table = ""
-        y_table = ""
         
 
 async def setup(client):

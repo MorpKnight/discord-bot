@@ -41,7 +41,9 @@ class college(commands.Cog):
         plt.grid(which='both', color='k', linestyle='--', linewidth=0.5)
         plt.scatter(x, y)
         plt.plot(x_values, y_values)
-        plt.savefig("plot.jpg", format="jpg")
+
+        filename = os.urandom(24).hex()
+        plt.savefig(f"{filename}.jpg", format="jpg")
 
         if intercept < 0:
             intercept_message = f"Linear formula (y): **{slope:.4f}x - {-intercept:.4f}**"
@@ -51,7 +53,7 @@ class college(commands.Cog):
         await interaction.followup.send(f"""Slope (b): **{slope:.4f}**
 Intercept (a): **{intercept:.4f}**
 Standard error of the estimate (STEYX): **{std_err:.4f}**
-{intercept_message}""", file=discord.File("plot.jpg"))
+{intercept_message}""", file=discord.File(f"{filename}.jpg"))
         
 
 async def setup(client):

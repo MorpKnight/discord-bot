@@ -4,6 +4,7 @@ import numpy as np
 from discord import app_commands
 from discord.ext import commands
 from scipy.stats import linregress
+import os
 
 class college(commands.Cog):
     def __init__(self, client:discord.Client):
@@ -11,6 +12,7 @@ class college(commands.Cog):
 
     @app_commands.command(name='least_square', description="Separate array using space")
     async def leastsquare(self, interaction:discord.Interaction, x_table:str, y_table:str):
+        await interaction.response.defer()
         def check_len(x, y):
             if len(x) != len(y):
                 return False
@@ -46,10 +48,13 @@ class college(commands.Cog):
         else:
             intercept_message = f"Linear formula (y): **{slope:.4f}x + {intercept:.4f}**"
 
-        await interaction.response.send_message(f"""Slope (b): **{slope:.4f}**
+        await interaction.followup.send(f"""Slope (b): **{slope:.4f}**
 Intercept (a): **{intercept:.4f}**
 Standard error of the estimate (STEYX): **{std_err:.4f}**
 {intercept_message}""", file=discord.File("plot.jpg"))
+        # remove plot.jpg
+        os.remove("plot.jpg")
+        
 
 async def setup(client):
     await client.add_cog(college(client))

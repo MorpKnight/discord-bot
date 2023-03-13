@@ -12,13 +12,15 @@ class VoteButton(View):
     async def check_quota(self):
         with open('config.yml', 'r+') as f:
             config = yaml.safe_load(f)
-            if config['quota']['kick'] <= 0:
-                return False
-            else:
-                config['quota']['kick'] -= 1
+            if config['quota'][f"{self.type}"] > 0:
+                config['quota'][f"{self.type}"] -= 1
                 f.seek(0)
                 yaml.dump(config, f)
+                f.truncate()
                 return True
+            else:
+                return False
+                
             
     async def onVoting(self, number, member, interaction:discord.Interaction):
         if number == 5:

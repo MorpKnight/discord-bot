@@ -52,16 +52,27 @@ class moderation(commands.Cog):
     def __init__(self, client:discord.Client):
         self.client = client
         self.cmd = command_prompt_class()
-        self.checkQuota.start()
+        self.checkQuotaKick.start()
+        self.checkQuotaBan.start()
     
     @tasks.loop(minutes=1)
-    async def checkQuota(self):
+    async def checkQuotaKick(self):
         with open("config.yml", "r+") as f:
             data = yaml.safe_load(f)
             now = datetime.datetime.now()
             if now.strftime("%H:%M:%S") == "00:00:00":
                 data['quota']['kick'] = 5
-                data['quota']['ban'] = 5
+                f.seek(0)
+                yaml.dump(data, f, default_flow_style=False)
+                f.truncate()
+    
+    @tasks.loop(hours=168)
+    async def checkQuotaBan(self):
+        with open("config.yml", "r+") as f:
+            data = yaml.safe_load(f)
+            now = datetime.datetime.now()
+            if now.strftime("%H:%M:%S") == "00:00:00":
+                data['quota']['ban'] = 2
                 f.seek(0)
                 yaml.dump(data, f, default_flow_style=False)
                 f.truncate()

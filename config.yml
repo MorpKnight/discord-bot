@@ -1,26 +1,40 @@
 Roles:
   Tekkom:
     filename: tekkomp_roles
-    games: 1068500876567789598
-    kost: 1068500928514244619
+    games: 1078270539115806781
+    kost: 1078270560007630968
   Backroom:
     filename: serverkuliah
-    games: 1068500408177274880
-    comic: 1068500698616041513
-    kost: 1068500631289073754
+    games: 1078250091464364033
+    comic: 1078250191066497054
+    kost: 1078250165300887633
+    organisasi: 1078250232955027498
+    alin: 1078250269135093760
+    fismek: 1078250296565841981
+    mpkt: 1078250322524377108
+    proglan: 1079241379911319573
+    oak: 1079241414153621636
   FTUI:
     filename: ftui_roles
-    games:
-    departemen:
-    prodi:
+    games: 1078271108249301023
+    departemen: 1078270991299510353
+    prodi: 1078271108224122931
+    animeenjoyer: 1078271160581619753
   SMA:
     filename: serversma
     games: 1001100602748715018
 
 radio:
   Prambors: https://22283.live.streamtheworld.com/PRAMBORS_FM.mp3?dist=pramborsweb&tdsdk=js-2.9&swm=false&pname=tdwidgets&pversion=2.9&banners=300x250&burst-time=15&sbmid=2602d526-9abc-43ce-ef30-98113d654ceb
-  Symphony 924: https://14033.live.streamtheworld.com/SYMPHONY924AAC.aac?dist=radiosingapore
+  Symphony 924: https://23253.live.streamtheworld.com/SYMPHONY924AAC.aac?dist=radiosingapore
   Japan Radio Osaka: https://ais-edge51-live365-dal02.cdnstream.com/a51684
   NHK: https://kathy.torontocast.com:3560/
   Japan A Radio: https://audio.misproductions.com/japan128k
   J-Pop Powerplay Kawaii: https://kathy.torontocast.com:3060/;
+  Piano Chamber: https://mpc1.mediacp.eu/stream/allchamberwithpiano
+  Japan Hits - Asia DREAM Radio: http://igor.torontocast.com:1025/;
+  NYC Symphony: https://streaming.radiostreamlive.com/radiosymphony_devices-low?token=%3C?%20echo%20rand%20(1,200000);%20?%3E
+
+quota:
+  kick: 5
+  ban: 2

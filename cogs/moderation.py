@@ -150,7 +150,7 @@ class moderation(commands.Cog):
                 color = discord.Color.red()
             )
             embed.set_footer(text = f'Voting : 0/5')
-            await interaction.response.send_message(embed=embed, view=forceButton(member, type.value))                        
+            await interaction.response.send_message(embed=embed, view=forceButton(member, type.value))
         else:
             await interaction.response.send_message("Invalid type", ephemeral=True)
     

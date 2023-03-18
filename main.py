@@ -34,6 +34,7 @@ class Client(commands.Bot):
             for key, value in data['Roles'][i].items():
                 if key == 'filename':
                     module = importlib.import_module(f"cogs.utility.{value}")
+                    return module
                 else:
                     class_ = getattr(module, key)
                     self.add_view(view=class_(), message_id=value)

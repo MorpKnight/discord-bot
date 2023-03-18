@@ -88,7 +88,7 @@ class VoteButton(View):
         await self.onVoting(self.voting, self.member, interaction)
         await interaction.followup.send(f"{interaction.user} has voted to not {self.type} ", ephemeral = True)
 
-    async def on_timeout(self, interaction:discord.Interaction):
+    async def on_timeout(self, interaction):
         embed = discord.Embed(
             title = 'Timeout',
             description = "Voting has timed out.",

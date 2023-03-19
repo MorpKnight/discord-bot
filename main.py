@@ -30,11 +30,10 @@ class Client(commands.Bot):
                 await client.load_extension(f"cogs.{name}")
         self.loop.create_task(self.startup())
         for i in data['Roles']:
-            # global module
             for key, value in data['Roles'][i].items():
+                global module
                 if key == 'filename':
                     module = importlib.import_module(f"cogs.utility.{value}")
-                    return module
                 else:
                     class_ = getattr(module, key)
                     self.add_view(view=class_(), message_id=value)

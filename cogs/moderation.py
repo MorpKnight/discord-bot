@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import discord
 import yaml
-from cogs.utility.moderation_button import VoteButton
+from cogs.utility.moderation_button import VoteButton, ForceButton
 from discord import app_commands
 from discord.app_commands import Choice, checks
 from discord.ext import commands, tasks
@@ -114,7 +114,9 @@ class moderation(commands.Cog):
     @app_commands.checks.has_permissions(ban_members=True)
     @app_commands.choices(type = [
         Choice(name = "Kick", value = "kick"),
-        Choice(name = "Ban", value = "ban")
+        Choice(name = "Ban", value = "ban"),
+        Choice(name = "Force Kick", value = "force_kick"),
+        Choice(name = "Force Ban", value = "force_ban")
     ])
     async def vote_kick_ban(self, interaction:discord.Interaction, type:Choice[str], member:discord.Member, reason:str = None):
         if type.value == "kick":
@@ -132,7 +134,23 @@ class moderation(commands.Cog):
                 color = discord.Color.red()
             )
             embed.set_footer(text = f'Voting : 0/5')
-            await interaction.response.send_message(embed=embed, view=VoteButton(member, type.value))             
+            await interaction.response.send_message(embed=embed, view=VoteButton(member, type.value))
+        elif type.value == "force_kick":
+            embed = discord.Embed(
+                title = "Voting to FORCE KICK",
+                description = f"{member.mention} has been put in voting to be force kicked from the server.\nReason: {reason}",
+                color = discord.Color.red()
+            )   
+            embed.set_footer(text = f'Voting : 0/5')
+            await interaction.response.send_message(embed=embed, view=ForceButton(member, type.value))
+        elif type.value == "force_ban":
+            embed = discord.Embed(
+                title = "Voting to FORCE BAN",
+                description = f"{member.mention} has been put in voting to be force banned from the server.\nReason: {reason}",
+                color = discord.Color.red()
+            )
+            embed.set_footer(text = f'Voting : 0/5')
+            await interaction.response.send_message(embed=embed, view=ForceButton(member, type.value))
         else:
             await interaction.response.send_message("Invalid type", ephemeral=True)
     

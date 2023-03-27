@@ -31,6 +31,7 @@ class Client(commands.Bot):
         self.loop.create_task(self.startup())
         for i in data['Roles']:
             for key, value in data['Roles'][i].items():
+                global module
                 if key == 'filename':
                     module = importlib.import_module(f"cogs.utility.{value}")
                 else:

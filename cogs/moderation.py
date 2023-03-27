@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import discord
 import yaml
-from cogs.utility.moderation_button import VoteButton, forceButton
+from cogs.utility.moderation_button import VoteButton, ForceButton
 from discord import app_commands
 from discord.app_commands import Choice, checks
 from discord.ext import commands, tasks
@@ -140,9 +140,9 @@ class moderation(commands.Cog):
                 title = "Voting to FORCE KICK",
                 description = f"{member.mention} has been put in voting to be force kicked from the server.\nReason: {reason}",
                 color = discord.Color.red()
-            )
+            )   
             embed.set_footer(text = f'Voting : 0/5')
-            await interaction.response.send_message(embed=embed, view=forceButton(member, type.value))
+            await interaction.response.send_message(embed=embed, view=ForceButton(member, type.value))
         elif type.value == "force_ban":
             embed = discord.Embed(
                 title = "Voting to FORCE BAN",
@@ -150,7 +150,7 @@ class moderation(commands.Cog):
                 color = discord.Color.red()
             )
             embed.set_footer(text = f'Voting : 0/5')
-            await interaction.response.send_message(embed=embed, view=forceButton(member, type.value))
+            await interaction.response.send_message(embed=embed, view=ForceButton(member, type.value))
         else:
             await interaction.response.send_message("Invalid type", ephemeral=True)
     

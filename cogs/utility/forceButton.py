@@ -80,7 +80,7 @@ class ForceButton(View):
         label = 'No',
         style = discord.ButtonStyle.green
     )
-    async def ForceTrue(self, interaction, button):
+    async def ForceFalse_fake(self, interaction, button):
         self.voting += 1
         await self.onVoting(self.voting, self.member, interaction)
         if self.voting != 5:

@@ -7,7 +7,8 @@ from concurrent.futures import ThreadPoolExecutor
 
 import discord
 import yaml
-from cogs.utility.moderation_button import VoteButton, ForceButton
+from cogs.utility.voteButton import VoteButton
+from cogs.utility.forceButton import ForceButton
 from discord import app_commands
 from discord.app_commands import Choice, checks
 from discord.ext import commands, tasks

@@ -75,3 +75,18 @@ class ForceButton(View):
                 pass
         else:
             pass
+    
+    @discord.ui.button(
+        label = 'No',
+        style = discord.ButtonStyle.green
+    )
+    async def ForceTrue(self, interaction, button):
+        self.voting += 1
+        await self.onVoting(self.voting, self.member, interaction)
+        if self.voting != 5:
+            try:
+                await interaction.followup.send(f"{interaction.user} has voted to {self.type}.", ephemeral = True)
+            except:
+                pass
+        else:
+            pass

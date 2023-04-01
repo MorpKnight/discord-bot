@@ -115,6 +115,5 @@ class adding_role(commands.Cog):
         for view in views:
             await channel.send(view=view)
 
-
 async def setup(client):
     await client.add_cog(adding_role(client))

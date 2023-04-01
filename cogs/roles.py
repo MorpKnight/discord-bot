@@ -77,9 +77,12 @@ class adding_role(commands.Cog):
                 await interaction.response.send_message(content="Error", ephemeral=True)
 
         elif option.value == 'edit':
-            msgid = int(msgid)
-            msg = await interaction.channel.fetch_message(msgid)
-            await msg.edit(content=arg, view=viewRole)
+            try:
+                message = await channel.fetch_message(msgid)
+                await message.edit(content=arg)
+                await interaction.response.send_message(content="Message edited", ephemeral=True)
+            except:
+                await interaction.response.send_message(content="Error", ephemeral=True)
 
 async def setup(client):
     await client.add_cog(adding_role(client))

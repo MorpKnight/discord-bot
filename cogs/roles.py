@@ -83,6 +83,38 @@ class adding_role(commands.Cog):
                 await interaction.response.send_message(content="Message edited", ephemeral=True)
             except:
                 await interaction.response.send_message(content="Error", ephemeral=True)
+    
+    @app_commands.command(name="setup_roles", description="Setup server roles")
+    @app_commands.checks.has_permissions(manage_roles=True)
+    @app_commands.choices(filename=[
+        Choice(name="FTUI", value="ftui"),
+        Choice(name="SMA", value="sma"),
+        Choice(name="Tekkom", value="tekkom"),
+        Choice(name="Backroom", value="backroom")
+    ])
+    async def setup_roles(self, interaction: discord.Interaction, channel: discord.TextChannel, filename: Choice[str]):
+        if filename.value == 'ftui':
+            views = [RolesFTUI.games(), RolesFTUI.departemen(), RolesFTUI.prodi(), RolesFTUI.animeenjoyer()]
+        elif filename.value == 'sma':
+            views = [RolesSMA.games()]
+        elif filename.value == 'tekkom':
+            views = [RolesTekkom.kost(), RolesTekkom.games()]
+        elif filename.value == 'backroom':
+            views = [
+                RolesBackroom.games(),
+                RolesBackroom.kost(),
+                RolesBackroom.comic(),
+                RolesBackroom.organisasi(),
+                RolesBackroom.alin(),
+                RolesBackroom.fismek(),
+                RolesBackroom.mpkt(),
+                RolesBackroom.proglan(),
+                RolesBackroom.oak()
+            ]
+
+        for view in views:
+            await channel.send(view=view)
+
 
 async def setup(client):
     await client.add_cog(adding_role(client))

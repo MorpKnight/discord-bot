@@ -36,7 +36,7 @@ class musicPlayer():
     
     async def nextqueue(self, ctx):
         FFMPEG_OPTIONS = {
-            'options': '-vn -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 2'
+            'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
         }
         while self.query != []:
             if self.voice_client != None:

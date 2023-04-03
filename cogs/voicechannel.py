@@ -68,7 +68,8 @@ class voice(commands.Cog):
                         color = discord.Color.random()
                     )
                     embed.set_thumbnail(url=query['thumbnail'])
-                    self.voice_client.play(FFmpegPCMAudio(query['formats'][0]['url'], **FFMPEG_OPTIONS))
+                    self.voice_client.play(FFmpegPCMAudio(query['url'], **FFMPEG_OPTIONS))
+                    await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{query['title']}"))
                     self.np = query['title']
                     await ctx.send(embed=embed)
                     await musicPlayer.gettime(self)
@@ -107,6 +108,7 @@ class voice(commands.Cog):
                     )
                     embed.set_thumbnail(url=video['thumbnail'])
                     self.voice_client.play(FFmpegPCMAudio(video['url'], **FFMPEG_OPTIONS))
+                    await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{video['title']}"))
                     self.np = video['title']
                     self.query.append(video)
                     await ctx.send(embed=embed)
@@ -293,6 +295,7 @@ class voice(commands.Cog):
                         self.loop = False
                         self.spot = []
                         self.playlist = []
+                        await self.client.change_presence(activity=None)
             except AttributeError:
                 pass
 

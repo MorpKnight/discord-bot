@@ -18,6 +18,10 @@ clientManager = SpotifyClientCredentials(client_id=publicKey, client_secret=secr
 spotify = spotipy.Spotify(client_credentials_manager=clientManager)
 
 class musicPlayer():
+    def __init__(self, ctx=None, client=None):
+        self.ctx = ctx
+        self.client = client
+        
     async def gettime(self):
         selfSpot = iter(self.spot)
         n = 1
@@ -53,6 +57,7 @@ class musicPlayer():
                                 self.np = video['title']
                                 
                                 self.voice_client.play(FFmpegPCMAudio(video['url'], **FFMPEG_OPTIONS))
+                                await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{self.np}"))
                                 embed = discord.Embed(
                                     title="Now playing", 
                                     description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}", 
@@ -66,6 +71,7 @@ class musicPlayer():
                             self.time = 0
                             video = self.query[0]
                             self.voice_client.play(FFmpegPCMAudio(video['url'], **FFMPEG_OPTIONS))
+                            await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{self.np}"))
                             embed = discord.Embed(
                                 title="Now playing",
                                 description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}",

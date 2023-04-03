@@ -8,7 +8,8 @@ from discord import ButtonStyle, FFmpegPCMAudio
 from discord.ui import Button, View, button
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
-from yt_dlp import YoutubeDL
+import yt_dlp
+import glob, os
 
 load_dotenv()
 publicKey = getenv("PUBLICKEY")
@@ -61,10 +62,10 @@ class musicPlayer():
                                     ]
                                 }
 
-                                with YoutubeDL(YDL_OPT) as ydl:
+                                with yt_dlp.YoutubeDL(YDL_OPT) as ydl:
                                     ydl.download([video['webpage_url']])
 
-                                songPath = f"{video['title']}.mp3"
+                                songPath = max(glob.iglob(f"{video['title']}.mp3"), key=os.path.getctime)
                                 self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS)) 
                                 # self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
                                 embed = discord.Embed(
@@ -90,10 +91,10 @@ class musicPlayer():
                                 ]
                             }
 
-                            with YoutubeDL(YDL_OPT) as ydl:
+                            with yt_dlp.YoutubeDL(YDL_OPT) as ydl:
                                 ydl.download([video['webpage_url']])
 
-                            songPath = f"{video['title']}.mp3"
+                            songPath = max(glob.iglob(f"{video['title']}.mp3"), key=os.path.getctime)
                             self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS))
                             # self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
                             embed = discord.Embed(
@@ -116,7 +117,7 @@ class musicPlayer():
             'noplaylist': True,
             'debug' : True
         }
-        with YoutubeDL(OPTION) as ydl:
+        with yt_dlp.YoutubeDL(OPTION) as ydl:
             try:
                 requests.get(query)
             except:

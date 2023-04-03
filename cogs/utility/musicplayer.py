@@ -8,7 +8,8 @@ from discord import ButtonStyle, FFmpegPCMAudio
 from discord.ui import Button, View, button
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
-from yt_dlp import YoutubeDL
+import yt_dlp
+import glob, os
 
 load_dotenv()
 publicKey = getenv("PUBLICKEY")
@@ -50,8 +51,8 @@ class musicPlayer():
                                 self.time = 0
                                 video = self.query[0]
                                 self.np = video['title']
-                                source = video['formats'][0]['url']
-                                self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
+                                
+                                self.voice_client.play(FFmpegPCMAudio(video['url'], **FFMPEG_OPTIONS))
                                 embed = discord.Embed(
                                     title="Now playing", 
                                     description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}", 
@@ -64,8 +65,7 @@ class musicPlayer():
                         if self.voice_client.is_paused() == False:
                             self.time = 0
                             video = self.query[0]
-                            source = video['formats'][0]['url']
-                            self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
+                            self.voice_client.play(FFmpegPCMAudio(video['url'], **FFMPEG_OPTIONS))
                             embed = discord.Embed(
                                 title="Now playing",
                                 description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}",
@@ -86,7 +86,7 @@ class musicPlayer():
             'noplaylist': True,
             'debug' : True
         }
-        with YoutubeDL(OPTION) as ydl:
+        with yt_dlp.YoutubeDL(OPTION) as ydl:
             try:
                 requests.get(query)
             except:

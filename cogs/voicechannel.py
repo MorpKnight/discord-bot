@@ -1,10 +1,12 @@
 import time
 from random import shuffle
+import glob, os
 
 import discord
 from discord import FFmpegPCMAudio
 from discord.ext import commands, tasks
 from discord.ui import View
+import yt_dlp
 
 from cogs.utility.musicplayer import musicPlayer, queuebutton
 
@@ -104,7 +106,7 @@ class voice(commands.Cog):
                         color = discord.Color.random()
                     )
                     embed.set_thumbnail(url=video['thumbnail'])
-                    self.voice_client.play(FFmpegPCMAudio(video['formats'][0]['url'], **FFMPEG_OPTIONS))
+                    self.voice_client.play(FFmpegPCMAudio(video['url'], **FFMPEG_OPTIONS))
                     self.np = video['title']
                     self.query.append(video)
                     await ctx.send(embed=embed)

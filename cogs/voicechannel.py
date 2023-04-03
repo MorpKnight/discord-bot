@@ -123,7 +123,7 @@ class voice(commands.Cog):
                         ydl.download([video['webpage_url']])
                     
                     songPath = max(glob.iglob(f"*.mp3"), key=os.path.getctime)
-                    self.voice_client.play(FFmpegPCMAudio(songPath))
+                    self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS))
 
                     # self.voice_client.play(FFmpegPCMAudio(video['formats'][0]['url'], **FFMPEG_OPTIONS))
                     self.np = video['title']

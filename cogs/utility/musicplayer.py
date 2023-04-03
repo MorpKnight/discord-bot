@@ -51,7 +51,22 @@ class musicPlayer():
                                 video = self.query[0]
                                 self.np = video['title']
                                 source = video['formats'][0]['url']
-                                self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
+                                
+                                # download song from url
+                                YDL_OPT = {
+                                    'format': 'bestaudio/best',
+                                    "outtmpl": f"{video['title']}.mp3",
+                                    "postprocessors": [
+                                        {"key": "FFmpegExtractAudio", "preferredcodec": "mp3", "preferredquality": "192"}
+                                    ]
+                                }
+
+                                with YoutubeDL(YDL_OPT) as ydl:
+                                    ydl.download([video['webpage_url']])
+
+                                songPath = f"{video['title']}.mp3"
+                                self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS)) 
+                                # self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
                                 embed = discord.Embed(
                                     title="Now playing", 
                                     description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}", 
@@ -65,7 +80,22 @@ class musicPlayer():
                             self.time = 0
                             video = self.query[0]
                             source = video['formats'][0]['url']
-                            self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
+
+                            # download song from url
+                            YDL_OPT = {
+                                'format': 'bestaudio/best',
+                                "outtmpl": f"{video['title']}.mp3",
+                                "postprocessors": [
+                                    {"key": "FFmpegExtractAudio", "preferredcodec": "mp3", "preferredquality": "192"}
+                                ]
+                            }
+
+                            with YoutubeDL(YDL_OPT) as ydl:
+                                ydl.download([video['webpage_url']])
+
+                            songPath = f"{video['title']}.mp3"
+                            self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS))
+                            # self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
                             embed = discord.Embed(
                                 title="Now playing",
                                 description=f"[{video['title']}]({video['webpage_url']})\n**Uploader:** {video['uploader']}",

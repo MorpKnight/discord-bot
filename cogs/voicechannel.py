@@ -125,7 +125,7 @@ class voice(commands.Cog):
                     # songPath = max(glob.iglob(f"*.mp3"), key=os.path.getctime)
                     # self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS))
 
-                    self.voice_client.play(FFmpegPCMAudio(video['webpage_url'], **FFMPEG_OPTIONS))
+                    self.voice_client.play(FFmpegPCMAudio(video['formats'][0]['url'], **FFMPEG_OPTIONS))
                     self.np = video['title']
                     self.query.append(video)
                     await ctx.send(embed=embed)

@@ -1,10 +1,12 @@
 import time
 from random import shuffle
+import glob, os
 
 import discord
 from discord import FFmpegPCMAudio
 from discord.ext import commands, tasks
 from discord.ui import View
+import yt_dlp
 
 from cogs.utility.musicplayer import musicPlayer, queuebutton
 
@@ -104,7 +106,26 @@ class voice(commands.Cog):
                         color = discord.Color.random()
                     )
                     embed.set_thumbnail(url=video['thumbnail'])
-                    self.voice_client.play(FFmpegPCMAudio(video['formats'][0]['url'], **FFMPEG_OPTIONS))
+
+                    # download file
+                    YDL_OPT = {
+                        'format': 'bestaudio/best',
+                        'outtmpl': f"{video['title']}.mp3",
+                        'noplaylist': True,
+                        'postprocessors': [{
+                            'key': 'FFmpegExtractAudio',
+                            'preferredcodec': 'mp3',
+                            'preferredquality': '192',
+                        }],
+                    }
+
+                    with yt_dlp.YoutubeDL(YDL_OPT) as ydl:
+                        ydl.download([video['webpage_url']])
+                    
+                    songPath = max(glob.iglob(f"{video['title']}.mp3"), key=os.path.getctime)
+                    self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS))
+
+                    # self.voice_client.play(FFmpegPCMAudio(video['formats'][0]['url'], **FFMPEG_OPTIONS))
                     self.np = video['title']
                     self.query.append(video)
                     await ctx.send(embed=embed)

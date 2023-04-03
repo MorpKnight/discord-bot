@@ -44,7 +44,7 @@ class voice(commands.Cog):
     @commands.hybrid_command(name='play', aliases=['p'], description = "Plays a song")
     async def _play(self, ctx, *, title:str=None):
         FFMPEG_OPTIONS = {
-            'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+            'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 2',
         }
         voiceChannel = ctx.author.voice
         if voiceChannel and voiceChannel.channel:

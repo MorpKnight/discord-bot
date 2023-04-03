@@ -65,7 +65,7 @@ class musicPlayer():
                                 with yt_dlp.YoutubeDL(YDL_OPT) as ydl:
                                     ydl.download([video['webpage_url']])
 
-                                songPath = max(glob.iglob(f"{video['title']}.mp3"), key=os.path.getctime)
+                                songPath = max(glob.iglob(f"*.mp3"), key=os.path.getctime)
                                 self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS)) 
                                 # self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
                                 embed = discord.Embed(
@@ -94,7 +94,7 @@ class musicPlayer():
                             with yt_dlp.YoutubeDL(YDL_OPT) as ydl:
                                 ydl.download([video['webpage_url']])
 
-                            songPath = max(glob.iglob(f"{video['title']}.mp3"), key=os.path.getctime)
+                            songPath = max(glob.iglob(f"*.mp3"), key=os.path.getctime)
                             self.voice_client.play(FFmpegPCMAudio(songPath, **FFMPEG_OPTIONS))
                             # self.voice_client.play(FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
                             embed = discord.Embed(

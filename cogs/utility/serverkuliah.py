@@ -81,6 +81,7 @@ class MatKulSodok(MultiRoleSelect):
         super().__init__(
             role_list=['Kewirus', "Profet"],
             placeholder="Matkul Sodok",
+            max_values=2,
             custom_id="matkul_sodok"
         )
 

@@ -110,7 +110,7 @@ class adding_role(commands.Cog):
                 RolesBackroom.mpkt(),
                 RolesBackroom.proglan(),
                 RolesBackroom.oak(),
-                RolesBackroom.matkul_sodoku()
+                RolesBackroom.matkul_sodok()
             ]
 
         for view in views:

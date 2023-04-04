@@ -76,6 +76,14 @@ class Organisasi(SingleRoleSelect):
             custom_id="organisasi"
         )
 
+class MatKulSodok(MultiRoleSelect):
+    def __init__(self):
+        super().__init__(
+            role_list=['Kewirus', "Profet"],
+            placeholder="Matkul Sodok",
+            custom_id="matkul_sodok"
+        )
+
 class games(View):
     def __init__(self):
         super().__init__(timeout=None)
@@ -119,3 +127,8 @@ class organisasi(View):
     def __init__(self):
         super().__init__(timeout=None)
         self.add_item(Organisasi())
+
+class matkul_sodok(View):
+    def __init__(self):
+        super().__init__(timeout=None)
+        self.add_item(MatKulSodok())

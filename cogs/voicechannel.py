@@ -1,12 +1,9 @@
 import time
 from random import shuffle
-import glob, os
 
 import discord
 from discord import FFmpegPCMAudio
 from discord.ext import commands, tasks
-from discord.ui import View
-import yt_dlp
 
 from cogs.utility.musicplayer import musicPlayer, queuebutton
 

@@ -4,12 +4,11 @@ from os import getenv
 import discord
 import requests
 import spotipy
-from discord import ButtonStyle, FFmpegPCMAudio
-from discord.ui import Button, View, button
+import yt_dlp
+from discord import FFmpegPCMAudio
+from discord.ui import View
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
-import yt_dlp
-import glob, os
 
 load_dotenv()
 publicKey = getenv("PUBLICKEY")

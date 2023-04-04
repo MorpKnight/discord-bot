@@ -5,14 +5,13 @@ import random
 import subprocess
 from asyncio import sleep
 from concurrent.futures import ThreadPoolExecutor
-from multiprocessing.connection import Client
 
 import aiohttp
 import discord
 import dotenv
 from discord import app_commands
 from discord.app_commands import Choice
-from discord.ext import commands, tasks
+from discord.ext import commands
 from discord_together import DiscordTogether
 
 dotenv.load_dotenv()

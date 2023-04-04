@@ -2,10 +2,8 @@ from asyncio import sleep
 
 import discord
 from discord import app_commands
-from discord.app_commands import Choice, choices
+from discord.app_commands import Choice
 from discord.ext import commands
-from discord.ext.commands import group, hybrid_command, hybrid_group
-from discord.utils import get
 
 
 class broadcast(commands.Cog):

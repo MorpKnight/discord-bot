@@ -2,7 +2,6 @@ import asyncio
 import functools
 import os
 import subprocess
-from asyncio import sleep
 from concurrent.futures import ThreadPoolExecutor
 
 import discord

@@ -22,6 +22,6 @@ class DivisiSelect(SingleRoleSelect):
 
 class JobDivisiView(View):
     def __init__(self):
-        super().__init__()
+        super().__init__(timeout=None)
         self.add_item(JobSelect())
         self.add_item(DivisiSelect())

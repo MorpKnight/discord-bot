@@ -7,6 +7,8 @@ import cogs.utility.ftui_roles as RolesFTUI
 import cogs.utility.serverkuliah as RolesBackroom
 import cogs.utility.serversma as RolesSMA
 import cogs.utility.tekkomp_roles as RolesTekkom
+import cogs.utility.makro_dte as RolesDTE
+
 
 role_list = ['games', 'kost', 'comic', 'departemen', 'prodi', 'animeenjoyer', 'alin', 'fismek', 'mpkt', 'proglan', 'oak', 'organisasi', 'matkul_sodok']
 class adding_role(commands.Cog):
@@ -85,7 +87,8 @@ class adding_role(commands.Cog):
         Choice(name="FTUI", value="ftui"),
         Choice(name="SMA", value="sma"),
         Choice(name="Tekkom", value="tekkom"),
-        Choice(name="Backroom", value="backroom")
+        Choice(name="Backroom", value="backroom"),
+        Choice(name="makro", value="makro")
     ])
     async def setup_roles(self, interaction: discord.Interaction, channel: discord.TextChannel, filename: Choice[str]):
         if filename.value == 'ftui':
@@ -107,6 +110,9 @@ class adding_role(commands.Cog):
                 RolesBackroom.oak(),
                 RolesBackroom.matkul_sodok()
             ]
+        elif filename.value == 'makro':
+            views = [RolesDTE.makro()]
+        
 
         for view in views:
             await channel.send(view=view)

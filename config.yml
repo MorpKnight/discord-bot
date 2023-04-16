@@ -24,6 +24,9 @@ Roles:
   SMA:
     filename: serversma
     games: 1001100602748715018
+  DTE:
+    filename: makro_dte
+    JobDivisiView: 00000000000000
 
 radio:
   Prambors: https://22283.live.streamtheworld.com/PRAMBORS_FM.mp3?dist=pramborsweb&tdsdk=js-2.9&swm=false&pname=tdwidgets&pversion=2.9&banners=300x250&burst-time=15&sbmid=2602d526-9abc-43ce-ef30-98113d654ceb

@@ -111,7 +111,7 @@ class adding_role(commands.Cog):
                 RolesBackroom.matkul_sodok()
             ]
         elif filename.value == 'makro':
-            views = [RolesDTE.makro()]
+            views = [RolesDTE.JobDivisiView()]
         
 
         for view in views:

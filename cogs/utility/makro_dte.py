@@ -4,7 +4,7 @@ from cogs.utility.ViewUtility import SingleRoleSelect, MultiRoleSelect
 
 class JobSelect(SingleRoleSelect):
     def __init__(self):
-        self.role_list = ['PJ', 'WaPJ', 'Staff']
+        self.role_list = ['PJ', 'WaPJ', 'Kabid', 'Wakabid', 'Staff']
         super().__init__(
             placeholder="Posisi lo?",
             role_list=self.role_list,

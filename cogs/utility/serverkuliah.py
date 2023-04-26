@@ -3,7 +3,7 @@ from cogs.utility.ViewUtility import MultiRoleSelect, SingleRoleSelect, RoleView
 
 class GameSelect(MultiRoleSelect):
     def __init__(self):
-        self.role_list = ['Apex Legends', 'VALORANT', 'Genshin Impact', 'Mobile Legends', 'osu!', 'GTA Online', 'The Forest', 'Clash Royale', 'TEKKEN', 'CS:GO']
+        self.role_list = ['Apex Legends', 'VALORANT', 'Genshin Impact', 'Mobile Legends', 'osu!', 'GTA Online', 'The Forest', 'Clash Royale', 'TEKKEN', 'CS:GO', 'Honkai: Star Rail']
         super().__init__(
             placeholder="Choose your games",
             role_list=self.role_list,

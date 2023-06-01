@@ -5,6 +5,7 @@ import random
 import subprocess
 from asyncio import sleep
 from concurrent.futures import ThreadPoolExecutor
+import openai
 
 import aiohttp
 import discord
@@ -19,6 +20,8 @@ dotenv.load_dotenv()
 class command(commands.Cog):
     def __init__(self, client:discord.Client):
         self.client = client
+        self.openaiKey = os.getenv('OPENAI_KEY')
+        self.conversation_history = []
     
     def run_cmd(cmd):
         print(f"Init run cmd: `{cmd}`")
@@ -53,6 +56,21 @@ class command(commands.Cog):
         else:
             spllited_text = [text]
         return spllited_text
+    
+    def ask_gpt4(question, conversation_history):
+        conversation_history.append(f'User: {question}\n')
+        prompt = ''.join(conversation_history)
+
+        response = openai.Completion.create(
+            engine="text-davinci-003",  # As of my knowledge cutoff in 2021, the latest engine was davinci-codex. Please use the appropriate engine name for GPT-4.
+            prompt=prompt,
+            max_tokens=150,
+        )
+
+        answer = response.choices[0].text.strip()
+        conversation_history.append(f'AI: {answer}\n')
+
+        return answer
 
     @commands.hybrid_command(name='ping', description="Check bot's latency to server")
     async def _ping(self, ctx:commands.Context):
@@ -132,45 +150,57 @@ class command(commands.Cog):
     async def _testattachment(self, interaction:discord.Interaction, attachment:discord.Attachment):
         await interaction.response.send_message(f"Attachment: {attachment.url}")
     
-    @app_commands.command(name='askgpt', description="Ask GPT-3")
-    @app_commands.describe(creativity="Creativity of GPT-3 0 - 1.0 (float)", question="Question to ask GPT-3 (str)")
-    async def _askgpt(self, interaction:discord.Interaction, creativity:float, question:str):
-        if creativity > 1.0:
-            creativity = 1.0
-        elif creativity < 0:
-            creativity = 0.0
-        
+    @app_commands.command(name='askgpt', description="Ask ChatGPT-")
+    async def _askgpt(self, interaction:discord.Interaction,  question:str):
         await interaction.response.defer()
+        response = self.ask_gpt4(question, self.conversation_history)
 
-        while True:
-            try:
-                async with aiohttp.ClientSession() as session:
-                    payload = {
-                        "model": "text-davinci-003",
-                        "prompt": question,
-                        "max_tokens": 2048,
-                        "temperature": creativity,
-                    }
+        embed = discord.Embed(
+            title = 'AskGPT',
+            description=f"Question: {question.capitalize()}\nAnswer: {response}",
+            colour = discord.Colour.random()
+        )
 
-                    headers = {
-                        "Authorization": "Bearer " + os.getenv("GPT3_TOKEN"),
-                    }
-                    async with session.post("https://api.openai.com/v1/completions", json=payload, headers=headers) as resp:
-                        data = await resp.json()
-                        resp = f"""Question: 
-{question}
-Answer: 
-```{data['choices'][0]['text']}```"""
-                        embed = discord.Embed(
-                            title = "GPT-3",
-                            description = resp,
-                            colour = discord.Colour.random()
-                        )
-                        embed.set_footer(text="Powered by OpenAI")
-                        await interaction.followup.send(embed=embed)
-                        break
-            except discord.errors.NotFound:
-                await sleep(1)
+        await interaction.followup.send(embed=embed)
+
+#     @app_commands.describe(creativity="Creativity of GPT-3 0 - 1.0 (float)", question="Question to ask GPT-3 (str)")
+#     async def _askgpt(self, interaction:discord.Interaction, creativity:float, question:str):
+#         if creativity > 1.0:
+#             creativity = 1.0
+#         elif creativity < 0:
+#             creativity = 0.0
+        
+#         await interaction.response.defer()
+
+#         while True:
+#             try:
+#                 async with aiohttp.ClientSession() as session:
+#                     payload = {
+#                         "model": "text-davinci-003",
+#                         "prompt": question,
+#                         "max_tokens": 2048,
+#                         "temperature": creativity,
+#                     }
+
+#                     headers = {
+#                         "Authorization": "Bearer " + os.getenv("GPT3_TOKEN"),
+#                     }
+#                     async with session.post("https://api.openai.com/v1/completions", json=payload, headers=headers) as resp:
+#                         data = await resp.json()
+#                         resp = f"""Question: 
+# {question}
+# Answer: 
+# ```{data['choices'][0]['text']}```"""
+#                         embed = discord.Embed(
+#                             title = "GPT-3",
+#                             description = resp,
+#                             colour = discord.Colour.random()
+#                         )
+#                         embed.set_footer(text="Powered by OpenAI")
+#                         await interaction.followup.send(embed=embed)
+#                         break
+#             except discord.errors.NotFound:
+#                 await sleep(1)
 
 async def setup(client):
     await client.add_cog(command(client))

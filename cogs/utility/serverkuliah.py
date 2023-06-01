@@ -3,7 +3,7 @@ from cogs.utility.ViewUtility import MultiRoleSelect, SingleRoleSelect, RoleView
 
 class GameSelect(MultiRoleSelect):
     def __init__(self):
-        self.role_list = ['Apex Legends', 'VALORANT', 'Genshin Impact', 'Mobile Legends', 'osu!', 'GTA Online', 'The Forest', 'Clash Royale', 'TEKKEN', 'CS:GO']
+        self.role_list = ['Apex Legends', 'VALORANT', 'Genshin Impact', 'Mobile Legends', 'osu!', 'GTA Online', 'The Forest', 'Clash Royale', 'TEKKEN', 'CS:GO', 'Honkai: Star Rail']
         super().__init__(
             placeholder="Choose your games",
             role_list=self.role_list,
@@ -76,6 +76,15 @@ class Organisasi(SingleRoleSelect):
             custom_id="organisasi"
         )
 
+class MatKulSodok(MultiRoleSelect):
+    def __init__(self):
+        super().__init__(
+            role_list=['Kewirus', "Profet"],
+            placeholder="Matkul Sodok",
+            max_values=2,
+            custom_id="matkul_sodok"
+        )
+
 class games(View):
     def __init__(self):
         super().__init__(timeout=None)
@@ -119,3 +128,8 @@ class organisasi(View):
     def __init__(self):
         super().__init__(timeout=None)
         self.add_item(Organisasi())
+
+class matkul_sodok(View):
+    def __init__(self):
+        super().__init__(timeout=None)
+        self.add_item(MatKulSodok())

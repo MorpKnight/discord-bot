@@ -5,15 +5,16 @@ Roles:
     kost: 1078270560007630968
   Backroom:
     filename: serverkuliah
-    games: 1091681449469550652
-    comic: 1091681452736913498
-    kost: 1091681451138887720
-    organisasi: 1091681454511108156
-    alin: 1091681456125902930
-    fismek: 1091681458227265546
-    mpkt: 1091681459829477386
-    proglan: 1091681480507392091
-    oak: 1091681482327736391
+    games: 1100947194950975568
+    comic: 1100947198323216425
+    kost: 1100947196418990122
+    organisasi: 1100947201011753061
+    alin: 1100947203066970162
+    fismek: 1100947205210255420
+    mpkt: 1100947207009603624
+    proglan: 1100947225674272878
+    oak: 1100947226861244477
+    matkul_sodok: 1100947228828381255
   FTUI:
     filename: ftui_roles
     games: 1078271108249301023
@@ -23,6 +24,9 @@ Roles:
   SMA:
     filename: serversma
     games: 1001100602748715018
+  DTE:
+    filename: makro_dte
+    JobDivisiView: 00000000000000
 
 radio:
   Prambors: https://22283.live.streamtheworld.com/PRAMBORS_FM.mp3?dist=pramborsweb&tdsdk=js-2.9&swm=false&pname=tdwidgets&pversion=2.9&banners=300x250&burst-time=15&sbmid=2602d526-9abc-43ce-ef30-98113d654ceb

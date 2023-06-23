@@ -29,14 +29,14 @@ class Client(commands.Bot):
                 name = filename[:-3]
                 await client.load_extension(f"cogs.{name}")
         self.loop.create_task(self.startup())
-        for i in data['Roles']:
-            for key, value in data['Roles'][i].items():
-                global module
-                if key == 'filename':
-                    module = importlib.import_module(f"cogs.utility.{value}")
-                else:
-                    class_ = getattr(module, key)
-                    self.add_view(view=class_(), message_id=value)
+        # for i in data['Roles']:
+        #     for key, value in data['Roles'][i].items():
+        #         global module
+        #         if key == 'filename':
+        #             module = importlib.import_module(f"cogs.utility.{value}")
+        #         else:
+        #             class_ = getattr(module, key)
+        #             self.add_view(view=class_(), message_id=value)
 
 
 client = Client()

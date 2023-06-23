@@ -5,11 +5,12 @@ import random
 import subprocess
 from asyncio import sleep
 from concurrent.futures import ThreadPoolExecutor
-import openai
 
 import aiohttp
 import discord
 import dotenv
+import google.generativeai as palm
+import openai
 from discord import app_commands
 from discord.app_commands import Choice
 from discord.ext import commands
@@ -17,11 +18,12 @@ from discord_together import DiscordTogether
 
 dotenv.load_dotenv()
 openai.api_key = os.getenv('OPENAI_KEY')
+palm.configure(api_key=os.getenv('GOOGLE_KEY'))
 
 class command(commands.Cog):
     def __init__(self, client:discord.Client):
         self.client = client
-        self.conversation_history = []
+        self.chatHistory = []
     
     def run_cmd(cmd):
         print(f"Init run cmd: `{cmd}`")
@@ -132,7 +134,7 @@ class command(commands.Cog):
     @commands.hybrid_command(name='nuclearcode', description='Randomly select a doujinshi number')
     @commands.is_nsfw()
     async def _nuclearcode(self, ctx):
-        result = random.randint(1, 440000)
+        result = random.randint(1, 500000)
         await ctx.reply(f'https://nhentai.net/g/{result}')
     
     @commands.hybrid_command(name='anonym', description="Send message anonymously to #anonym")
@@ -143,7 +145,7 @@ class command(commands.Cog):
         embed = discord.Embed(description=f"`{message}`")
         await ctx.send("Pesan terkirim", ephemeral=True)
         await anonymous_channel.send(embed=embed)
-        await anonymous_log.send(f"`{message}` ~ {ctx.author}")
+        await anonymous_log.send(f"`{message}` ~ {ctx.author.global_name}")
     
     @commands.command(name='cmd')
     @commands.is_owner()
@@ -161,46 +163,52 @@ class command(commands.Cog):
     @app_commands.command(name='testattachment', description='Test attachment')
     async def _testattachment(self, interaction:discord.Interaction, attachment:discord.Attachment):
         await interaction.response.send_message(f"Attachment: {attachment.url}")
-        
-    @app_commands.command(name='askgpt', description="Ask ChatGPT-")
-    async def _askgpt(self, interaction:discord.Interaction, question:str):
 
+    @app_commands.command(name='bard', description="Ask bard about something (english only)")
+    async def _askBard(self, interaction:discord.Interaction, question:str, temperature:float=0.5):
         await interaction.response.defer()
-        response = command.ask_gpt4(question, self.conversation_history)
-
-        # check if "AI:" is in response
-        if response[:3] == "AI:":
-            response = response[3:]
-
-        embed = discord.Embed(
-            title = 'AskGPT',
-            description=f"**Question**: {question}\n**Answer:**\n```{response}```",
-            colour = discord.Colour.random()
-        )
-
-        await interaction.followup.send(embed=embed)
-
-    @app_commands.command(name='codegpt', description="Code with GPT")
-    async def _codegpt(self, interaction:discord.Interaction, file:discord.Attachment, args:str="Fix this code"):
-        await interaction.response.defer()
-        await file.save(f'./{file.filename}')
-
-        with open(f'./{file.filename}', 'r') as f:
-            code = f.read()
+        self.chatHistory.append(question)
+        response = palm.chat(messages=self.chatHistory, temperature=temperature)
+        await interaction.followup.send(f"{response.last}")
         
-        extension = file.filename.split('.')[-1]
+    # @app_commands.command(name='askgpt', description="Ask ChatGPT-")
+    # async def _askgpt(self, interaction:discord.Interaction, question:str):
 
-        response = command.code_gpt4(args, code)
+    #     await interaction.response.defer()
+    #     response = command.ask_gpt4(question, self.conversation_history)
 
-        embed = discord.Embed(
-            title = 'CodeGPT',
-            description=f"**Args**: {args}\n**Code:**\n```{extension}\n{code}```\n**Output:**\n```{extension}\n{response}```",
-            colour = discord.Colour.random()
-        )
+    #     if response[:3] == "AI:":
+    #         response = response[3:]
 
-        await interaction.followup.send(embed=embed)
+    #     embed = discord.Embed(
+    #         title = 'AskGPT',
+    #         description=f"**Question**: {question}\n**Answer:**\n```{response}```",
+    #         colour = discord.Colour.random()
+    #     )
+
+    #     await interaction.followup.send(embed=embed)
+
+    # @app_commands.command(name='codegpt', description="Code with GPT")
+    # async def _codegpt(self, interaction:discord.Interaction, file:discord.Attachment, args:str="Fix this code"):
+    #     await interaction.response.defer()
+    #     await file.save(f'./{file.filename}')
+
+    #     with open(f'./{file.filename}', 'r') as f:
+    #         code = f.read()
         
-        os.remove(f'./{file.filename}')
+    #     extension = file.filename.split('.')[-1]
+
+    #     response = command.code_gpt4(args, code)
+
+    #     embed = discord.Embed(
+    #         title = 'CodeGPT',
+    #         description=f"**Args**: {args}\n**Code:**\n```{extension}\n{code}```\n**Output:**\n```{extension}\n{response}```",
+    #         colour = discord.Colour.random()
+    #     )
+
+    #     await interaction.followup.send(embed=embed)
+        
+    #     os.remove(f'./{file.filename}')
 
 async def setup(client):
     await client.add_cog(command(client))

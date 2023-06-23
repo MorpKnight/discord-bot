@@ -1,3 +1,5 @@
+# Not used anymore due Discord new "Channels & Roles" features
+
 import discord
 from discord import app_commands
 from discord.app_commands import Choice, choices

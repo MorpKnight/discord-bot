@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 import aiohttp
 import discord
 import dotenv
-import google.generativeai as palm
+# import google.generativeai as palm
 import openai
 from discord import app_commands
 from discord.app_commands import Choice
@@ -17,8 +17,8 @@ from discord.ext import commands
 from discord_together import DiscordTogether
 
 dotenv.load_dotenv()
-openai.api_key = os.getenv('OPENAI_KEY')
-palm.configure(api_key=os.getenv('GOOGLE_KEY'))
+# openai.api_key = os.getenv('OPENAI_KEY')
+# palm.configure(api_key=os.getenv('GOOGLE_KEY'))
 
 class command(commands.Cog):
     def __init__(self, client:discord.Client):
@@ -59,32 +59,32 @@ class command(commands.Cog):
             spllited_text = [text]
         return spllited_text
     
-    def ask_gpt4(question, conversation_history):
-        conversation_history.append(f'User: {question}\n')
-        prompt = ''.join(conversation_history)
+    # def ask_gpt4(question, conversation_history):
+    #     conversation_history.append(f'User: {question}\n')
+    #     prompt = ''.join(conversation_history)
 
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            max_tokens=2048,
-            prompt=prompt,
-        )
+    #     response = openai.Completion.create(
+    #         engine="text-davinci-003",
+    #         max_tokens=2048,
+    #         prompt=prompt,
+    #     )
 
-        answer = response.choices[0].text.strip()
-        conversation_history.append(f'AI: {answer}\n')
+    #     answer = response.choices[0].text.strip()
+    #     conversation_history.append(f'AI: {answer}\n')
 
-        return answer
+    #     return answer
     
-    def code_gpt4(question, code):
-        prompt = f'{question}\n```{code}```\n'
+    # def code_gpt4(question, code):
+    #     prompt = f'{question}\n```{code}```\n'
 
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            max_tokens=2048,
-            prompt=prompt
-        )
+    #     response = openai.Completion.create(
+    #         engine="text-davinci-003",
+    #         max_tokens=2048,
+    #         prompt=prompt
+    #     )
 
-        answer = response.choices[0].text.strip()
-        return answer
+    #     answer = response.choices[0].text.strip()
+    #     return answer
 
     @commands.hybrid_command(name='ping', description="Check bot's latency to server")
     async def _ping(self, ctx:commands.Context):
@@ -164,12 +164,12 @@ class command(commands.Cog):
     async def _testattachment(self, interaction:discord.Interaction, attachment:discord.Attachment):
         await interaction.response.send_message(f"Attachment: {attachment.url}")
 
-    @app_commands.command(name='bard', description="Ask bard about something (english only)")
-    async def _askBard(self, interaction:discord.Interaction, question:str, temperature:float=0.5):
-        await interaction.response.defer()
-        self.chatHistory.append(question)
-        response = palm.chat(messages=self.chatHistory, temperature=temperature)
-        await interaction.followup.send(f"{response.last}")
+    # @app_commands.command(name='bard', description="Ask bard about something (english only)")
+    # async def _askBard(self, interaction:discord.Interaction, question:str, temperature:float=0.5):
+    #     await interaction.response.defer()
+    #     self.chatHistory.append(question)
+    #     response = palm.chat(messages=self.chatHistory, temperature=temperature)
+    #     await interaction.followup.send(f"{response.last}")
         
     # @app_commands.command(name='askgpt', description="Ask ChatGPT-")
     # async def _askgpt(self, interaction:discord.Interaction, question:str):

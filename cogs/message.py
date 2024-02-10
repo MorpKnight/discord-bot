@@ -38,7 +38,7 @@ class message_nocommand(commands.Cog):
                 await message.delete()
 
                 anonymouslog = self.client.get_channel(1011982504904900609)
-                await anonymouslog.send(f"`{message.content}` ~ {message.author}")
+                await anonymouslog.send(f"`{message.content}` ~ {message.author.global_name}")
         
         elif message.channel.id == 1011113637496242279:
             if message.author.id == 385053392059236353:
@@ -58,7 +58,7 @@ class message_nocommand(commands.Cog):
                             await fetchMessage.reply(embed=embed_message)
 
                             anonymouslog = self.client.get_channel(1011982504904900609)
-                            await anonymouslog.send(f"`{message.content}` ~ {message.author}")
+                            await anonymouslog.send(f"`{message.content}` ~ {message.author.global_name}")
                 else:
                     if "gio" in message.content:
                             await message.delete()
@@ -69,7 +69,7 @@ class message_nocommand(commands.Cog):
                         await message.channel.send(embed=embed_message)
 
                         anonymouslog = self.client.get_channel(1011982504904900609)
-                        await anonymouslog.send(f"`{message.content}` ~ {message.author}")
+                        await anonymouslog.send(f"`{message.content}` ~ {message.author.global_name}")
                 
         elif message.channel.id == 964734223590260736:
             await message.add_reaction("👋")
